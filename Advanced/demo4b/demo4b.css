@@ -1,0 +1,84 @@
+/* This defines the calculator table styles */
+table {
+    margin-left: auto;
+    margin-right: auto;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+}
+
+/* This defines the styles for the calculator buttons */
+input[type="button"] {
+    width: 100px;
+    height: 100px;
+    padding: 20px 40px;
+    background-color: #bac42d;
+    color: black;
+    font-weight: bold;
+    font-size: 24px;
+    border: none;
+    border-radius: 50%;
+}
+
+/* This defines the styles for the calculator button hover state */
+input[type="button"]:hover {
+    background-color: black;
+    color: #bac42d;
+    cursor: pointer;
+}
+
+/* This defines the styles for the calculator display */
+input[type="text"]{
+    padding: 10px 30px;
+    font-size: 24px;
+    height: 68px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    border: 3px solid #bac42d;
+}
+
+/* This defines the styles for the calculator buttons */
+#btnEqual, #btnClear, #btnAdd, #btnSubtract, #btnMultiply, #btnDivide {
+    background-color: #bac42d;
+    color: black;
+    font-weight: bold;
+    font-size: 24px;
+    border: none;
+    border-radius: 5px;
+    width: 100%;
+}
+
+/* This defines the styles for the calculator button hover state */
+#btnDivide:hover {
+    background-color: black;
+    color: #bac42d;
+    cursor: pointer;
+}
+
+/* This defines the styles for the calculator button hover state */
+#btnMultiply:hover {
+    background-color: black;
+    color: #bac42d;
+    cursor: pointer;
+}
+
+/* This defines the styles for the calculator button hover state */
+#btnSubtract:hover {
+    background-color: black;
+    color: #bac42d;
+    cursor: pointer;
+}
+
+/* This defines the styles for the calculator button hover state */
+#btnAdd:hover {
+    background-color: black;
+    color: #bac42d;
+    cursor: pointer;
+}
+
+/* This defines the styles for the calculator button hover state */
+#btnEqual:hover {
+    background-color: black;
+    color: #bac42d;
+    cursor: pointer;
+}

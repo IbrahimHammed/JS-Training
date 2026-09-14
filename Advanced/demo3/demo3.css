@@ -1,0 +1,37 @@
+#a,#x,#b,#y,#c, #operator {
+    background-color: #0c012c;
+    color: white;
+    border: 3px solid #bac42d;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+}
+
+#equalTo {
+    background-color: #0c012c;
+    color: white;
+    border: 3px solid #b522de;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+}
+
+#btnCalculate {
+    background-color: #2c2d2d;
+    color: white;
+    border: 3px solid #bac42d;
+    width: 60px;
+    height: 60px;    
+    font-size: x-small;
+    border-radius: 50%;
+}
+
+#btnReset {
+    background-color: #2c2d2d;
+    color: white;
+    border: 3px solid #bac42d;
+    width: 60px;
+    height: 60px;
+    font-size: x-small;
+    border-radius: 50%;
+}

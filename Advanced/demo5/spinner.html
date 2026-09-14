@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Spin Game</title>
+    <link rel="stylesheet" href="./spinner.css">
+</head>
+<body>
+
+<div class="game-container">
+
+    <h1>🎉 Spin & Win Game 🎉</h1>
+
+    <div class="input-area">
+        <label>Enter a number (1–5):</label>
+        <input type="number" id="userNumber" min="1" max="5">
+        <button id="playBtn">Play</button>
+    </div>
+
+    <div class="grid">
+        <!-- Row 1: Prize Images -->
+        <div class="cell"><img id="img1" src="./cocacola.webp"></div>
+        <div class="cell"><img id="img2" src="./crush.jpg"></div>
+        <div class="cell"><img id="img3" src="./fanta.webp"></div>
+        <div class="cell"><img id="img4" src="./Sprite.jpg"></div>
+        <div class="cell"><img id="img5" src="./Pepsi.jpg"></div>
+
+        <!-- Row 2: Random Numbers -->
+        <div class="cell number" id="num1">0</div>
+        <div class="cell number" id="num2">0</div>
+        <div class="cell number" id="num3">0</div>
+        <div class="cell number" id="num4">0</div>
+        <div class="cell number" id="num5">0</div>
+    </div>
+
+    <!-- Message Display -->
+    <div id="message"></div>
+
+</div>
+
+<!-- Script for Spinner -->
+<script src="./spinner.js"></script>
+</body>
+</html>
