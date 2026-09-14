@@ -1,0 +1,20 @@
+[
+  {
+    "ProductCode": "P123",
+    "Quantity": 250,
+    "PurchaseDate": "2026-05-31",
+    "SupplierName": "Lovely Bakery Ikeja"
+  },
+  {
+    "ProductCode": "P123",
+    "Quantity": 140,
+    "PurchaseDate": "2026-05-30",
+    "SupplierName": "Sunshine Bakery Akoka"
+  },
+  {
+    "ProductCode": "P124",
+    "Quantity": 500,
+    "PurchaseDate": "2026-05-31",
+    "SupplierName": "Smartstore & Sons Ibadan"
+  }
+]

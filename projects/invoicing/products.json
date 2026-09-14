@@ -1,0 +1,20 @@
+[
+  {
+    "Code": "P123",
+    "Name": "Bread",
+    "CostPrice": 90,
+    "SellingPrice": 100
+  },
+  {
+    "Code": "P124",
+    "Name": "Milk",
+    "CostPrice": 750,
+    "SellingPrice": 1890
+  },
+  {
+    "Code": "P125",
+    "Name": "Egg",
+    "CostPrice": 90,
+    "SellingPrice": 140
+  }
+]

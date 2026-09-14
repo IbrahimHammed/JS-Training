@@ -1,0 +1,54 @@
+[
+  {
+    "timestamp": "2026-05-31T21:06:30.488Z",
+    "customer": {
+      "name": "Ibrahim Hammed",
+      "mobile": "08023384040",
+      "email": "aiyekootoh@gmail.com"
+    },
+    "items": [
+      {
+        "Code": "P123",
+        "Name": "Bread",
+        "UnitPrice": 100,
+        "Quantity": 25,
+        "LineTotal": 2500
+      },
+      {
+        "Code": "P124",
+        "Name": "Milk",
+        "UnitPrice": 1890,
+        "Quantity": 10,
+        "LineTotal": 18900
+      }
+    ],
+    "subtotal": 21400
+  },
+  {
+    "timestamp": "2026-06-06T18:38:16.000Z",
+    "customer": {
+      "name": "Ibrahim Hammed",
+      "mobile": "08023384040",
+      "email": "info@gmail.com"
+    },
+    "items": [
+      {
+        "Code": "P123",
+        "Name": "Bread",
+        "UnitPrice": 100,
+        "Quantity": 23,
+        "LineTotal": 2300
+      },
+      {
+        "Code": "P125",
+        "Name": "Egg",
+        "UnitPrice": 140,
+        "Quantity": 17,
+        "LineTotal": 2380
+      }
+    ],
+    "subtotal": 4680,
+    "vat": 234,
+    "totalAmount": 4914
+  }
+]
