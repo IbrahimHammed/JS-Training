@@ -37,6 +37,10 @@
     const generate9 = document.getElementById('btnGenerate9');
     const resultElement9 = document.getElementById('txtNumber9');
 
+    // example-10
+    const generate10 = document.getElementById('btnGenerate10');
+    const inputElement10 = document.getElementById('txtNumberInput10');
+    const resultElement10 = document.getElementById('txtNumberOutput10');
 
     // Step-2: Create a function to generate a random number and display it in the input field
     // Example-1
@@ -112,6 +116,57 @@
         resultElement9.value = randomNumber;
     }
 
+    // Example-10
+    // Generates a random number between 1 and 10 and compare it with the numeric equivalent of user input
+    function generateRandomNumberExample10() {
+        const randomNumber = Math.floor(Math.random() * 10) + 1;
+        resultElement10.value = randomNumber;
+        let userInputEquivalent;
+
+        // Convert user input text to number e.g. one is 1, two is 2
+        switch (inputElement10.value.toLowerCase()) {
+            case 'one':
+                userInputEquivalent = 1;
+                break;
+            case 'two':
+                userInputEquivalent = 2;
+                break;
+            case 'three':
+                userInputEquivalent = 3;
+                break;
+            case 'four':
+                userInputEquivalent = 4;
+                break;
+            case 'five':
+                userInputEquivalent = 5;
+                break;
+            case 'six':
+                userInputEquivalent = 6;
+                break;
+            case 'seven':
+                userInputEquivalent = 7;
+                break;
+            case 'eight':
+                userInputEquivalent = 8;
+                break;
+            case 'nine':
+                userInputEquivalent = 9;
+                break;
+            case 'ten':
+                userInputEquivalent = 10;
+                break;
+            default:
+                alert('Please enter a valid number between 1 and 10 (e.g., one, two, three, etc.)');
+                return;
+        }
+
+        if (userInputEquivalent === randomNumber) {
+            alert('Congratulations! You guessed the correct number.');
+        } else {
+            alert(`Sorry, the correct number was ${randomNumber}. Try again!`);
+        }
+    }
+
     // Step-3: Create and attach event listener to the button
     // Example-1
     generate1.addEventListener('click', generateRandomNumberExample1);
@@ -139,3 +194,6 @@
 
     // Example-9
     generate9.addEventListener('click', generateRandomNumberExample9);
+
+    // Example-10
+    generate10.addEventListener('click', generateRandomNumberExample10);
