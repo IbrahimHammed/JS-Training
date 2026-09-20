@@ -213,6 +213,32 @@
         resultElement13.value = randomNumber;
     }
 
+    // Example-14
+    // Generates random numbers quickly like a lottery draw for 3 seconds,
+    // then keeps the final number visible when the timer ends.
+    function generateRandomNumberExample14() {
+        const startNumber = 1;
+        const endNumber = 10;
+        const totalDuration = 3000; // 3 seconds
+        const intervalTime = 50; // quick changes like a lottery effect
+
+        let finalNumber = 0;
+        const startTime = Date.now();
+
+        // Clear any old value before starting the draw
+        resultElement14.value = "";
+
+        const intervalId = setInterval(() => {
+            finalNumber = Math.floor(Math.random() * (endNumber - startNumber + 1)) + startNumber;
+            resultElement14.value = finalNumber;
+
+            // Stop after 5 seconds and keep the final number on screen
+            if (Date.now() - startTime >= totalDuration) {
+                clearInterval(intervalId);
+            }
+        }, intervalTime);
+    }
+
 
     // Step-3: Create and attach event listener to the button
     // Example-1
@@ -253,3 +279,6 @@
 
     // Example-13
     generate13.addEventListener('click', generateRandomNumberExample13);
+
+    // Example-14
+    generate14.addEventListener('click', generateRandomNumberExample14);
