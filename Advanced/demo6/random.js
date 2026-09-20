@@ -42,6 +42,22 @@
     const inputElement10 = document.getElementById('txtNumberInput10');
     const resultElement10 = document.getElementById('txtNumberOutput10');
 
+    // example-11
+    const generate11 = document.getElementById('btnGenerate11');
+    const resultElement11 = document.getElementById('txtNumber11');
+
+    // Example-12
+    const generate12 = document.getElementById('btnGenerate12');
+    const resultElement12 = document.getElementById('txtNumber12');
+
+    // Example-13
+    const generate13 = document.getElementById('btnGenerate13');
+    const resultElement13 = document.getElementById('txtNumber13');
+
+    // Example-14
+    const generate14 = document.getElementById('btnGenerate14');
+    const resultElement14 = document.getElementById('txtNumber14');
+
     // Step-2: Create a function to generate a random number and display it in the input field
     // Example-1
     // Generates random numbers between 0 and 1
@@ -167,6 +183,37 @@
         }
     }
 
+    // Example-11
+    // Generates a random number between 5 and 10
+    function generateRandomNumberExample11() {
+        const startNumber = 5;
+        const endNumber = 10;
+
+        const randomNumber = Math.floor(Math.random() * (endNumber - startNumber + 1)) + startNumber;
+        resultElement11.value = randomNumber;
+    }
+
+    // Example-12
+    // Generates a random number between 11 and 25
+    function generateRandomNumberExample12() {
+        const startNumber = 11;
+        const endNumber = 25;
+
+        const randomNumber = Math.floor(Math.random() * (endNumber - startNumber + 1)) + startNumber;
+        resultElement12.value = randomNumber;
+    }
+
+    // Example-13
+    // Generates a random number between -5 and 5
+    function generateRandomNumberExample13() {
+        const startNumber = -5;
+        const endNumber = 5;
+
+        const randomNumber = Math.floor(Math.random() * (endNumber - startNumber + 1)) + startNumber;
+        resultElement13.value = randomNumber;
+    }
+
+
     // Step-3: Create and attach event listener to the button
     // Example-1
     generate1.addEventListener('click', generateRandomNumberExample1);
@@ -197,3 +244,12 @@
 
     // Example-10
     generate10.addEventListener('click', generateRandomNumberExample10);
+
+    // Example-11
+    generate11.addEventListener('click', generateRandomNumberExample11);
+
+    // Example-12
+    generate12.addEventListener('click', generateRandomNumberExample12);
+
+    // Example-13
+    generate13.addEventListener('click', generateRandomNumberExample13);
