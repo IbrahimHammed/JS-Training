@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f7f2">
+  <title>LIGHT Hospital | Care, clearly</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <section class="login-screen" id="login-screen">
+    <div class="login-brand"><span class="brand-mark">✚</span><span class="brand-copy"><strong>LIGHT</strong><small>HOSPITAL</small></span></div>
+    <div class="login-content">
+      <div class="login-message"><span class="eyebrow">A MORE HUMAN KIND OF CARE</span><h1>Welcome to your<br>LIGHT Hospital.</h1><p>Your care, handled with attention.</p><span class="login-leaf" aria-hidden="true">✳</span></div>
+      <div class="login-panel"><span class="eyebrow">SECURE SIGN IN</span><h2>Good to see you.</h2><p class="login-intro">Use the account details provided by your hospital administrator.</p>
+        <div class="login-switch" role="group" aria-label="Account type"><button type="button" class="selected" data-login-role="employee">Employee</button><button type="button" data-login-role="patient">Patient</button></div>
+        <form id="login-form"><label class="auth-field"><span>Email address</span><input name="email" type="email" autocomplete="username" required maxlength="254" placeholder="you@lighthospital.org"></label><label class="auth-field"><span>Password</span><input name="password" type="password" autocomplete="current-password" required maxlength="256" placeholder="Your password"></label><div class="login-error" id="login-error" role="alert" hidden></div><button class="button button-primary login-submit" type="submit">Sign in <span aria-hidden="true">↗</span></button></form>
+        <p class="login-footnote">Accounts are issued by LIGHT Hospital. Contact your administrator if you need access.</p>
+      </div>
+    </div>
+    <p class="login-caption">LIGHT HOSPITAL <span>·</span> CARE, CLEARLY</p>
+  </section>
+  <div class="app-shell" id="app-shell" hidden>
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#overview" aria-label="LIGHT Hospital home">
+        <span class="brand-mark">✚</span>
+        <span class="brand-copy"><strong>LIGHT</strong><small>HOSPITAL</small></span>
+      </a>
+      <div class="workspace-label">WORKSPACE</div>
+      <nav class="nav-list" aria-label="Main navigation">
+        <button class="nav-item patient-only" data-page="patient-portal" hidden><span class="nav-icon">♡</span>My health</button>
+        <button class="nav-item active" data-page="overview"><span class="nav-icon">⌂</span>Overview</button>
+        <button class="nav-item" data-page="patients"><span class="nav-icon">♡</span>Patients <span class="nav-count" data-count="patients"></span></button>
+        <button class="nav-item" data-page="appointments"><span class="nav-icon">▦</span>Appointments <span class="nav-count" data-count="appointments"></span></button>
+        <div class="nav-divider"></div>
+        <div class="workspace-label">CLINICAL CARE</div>
+        <button class="nav-item" data-page="consultations"><span class="nav-icon">✳</span>Consultations</button>
+        <button class="nav-item" data-page="investigations"><span class="nav-icon">⌕</span>Lab investigations</button>
+        <button class="nav-item" data-page="prescriptions"><span class="nav-icon">▤</span>Prescriptions</button>
+        <button class="nav-item" data-page="wards"><span class="nav-icon">▥</span>Wards & beds</button>
+        <div class="nav-divider"></div>
+        <div class="workspace-label">ADMINISTRATION</div>
+        <button class="nav-item" data-page="payments"><span class="nav-icon">＄</span>Payments</button>
+        <button class="nav-item" data-page="team"><span class="nav-icon">♧</span>Care team</button>
+        <button class="nav-item employee-admin-only" data-page="access" hidden><span class="nav-icon">⌑</span>Accounts & access</button>
+        <button class="nav-item" data-page="reports"><span class="nav-icon">▥</span>Reports</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="help-card"><span class="help-spark">✦</span><strong>Here for better care.</strong><small>Your hospital, in good hands.</small></div>
+        <div class="user-chip"><div class="avatar avatar-green" id="sidebar-avatar">MC</div><div class="user-copy"><strong id="sidebar-name">Dr. Maya Chen</strong><small id="sidebar-role">Administrator</small></div><span class="more-icon">···</span></div>
+      </div>
+    </aside>
+    <main class="main-area">
+      <header class="topbar">
+        <button class="mobile-menu icon-button" id="menu-toggle" aria-label="Open navigation">☰</button>
+        <div class="breadcrumb"><span>LIGHT Hospital</span><span class="crumb-slash">/</span><strong id="crumb-current">Overview</strong></div>
+        <div class="topbar-actions">
+          <div class="today-label"><span class="live-dot"></span><span id="today-date"></span></div>
+          <button class="icon-button notification-button" aria-label="Notifications">♧<i></i></button>
+          <div class="avatar avatar-green top-avatar">MC</div>
+          <button class="icon-button password-button" id="password-button" type="button" title="Change password" aria-label="Change password">⌑</button>
+          <button class="button button-quiet logout-button" id="logout-button" type="button">Sign out <span aria-hidden="true">↗</span></button>
+        </div>
+      </header>
+      <section class="page-content" id="page-content" aria-live="polite"></section>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+  <div class="modal-backdrop" id="modal-backdrop" hidden>
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div class="modal-heading"><div><span class="eyebrow" id="modal-eyebrow">NEW RECORD</span><h2 id="modal-title">Add a record</h2></div><button class="icon-button modal-close" id="modal-close" aria-label="Close dialog">×</button></div>
+      <form id="record-form"><div class="form-grid" id="form-fields"></div><div class="modal-actions"><button type="button" class="button button-quiet" id="cancel-button">Cancel</button><button type="submit" class="button button-primary"><span>Save record</span><span aria-hidden="true">↗</span></button></div></form>
+    </section>
+  </div>
+</body>
+</html>

@@ -1,0 +1,4 @@
+[
+  {"id":"c-1001","patient":"Daniel Kim","clinician":"Dr. Maya Chen","date":"2026-10-01","diagnosis":"Seasonal allergies","vitals":"BP 118/76 · 36.8 °C","notes":"Symptoms improving. Continue current care plan."},
+  {"id":"c-1002","patient":"Sofia Patel","clinician":"Dr. Maya Chen","date":"2026-09-29","diagnosis":"Routine wellness review","vitals":"BP 112/72 · 36.6 °C","notes":"Wellness review completed. Follow up in six months."}
+]

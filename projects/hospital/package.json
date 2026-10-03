@@ -1,0 +1,9 @@
+{
+  "name": "light-hospital-emr",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A lightweight, JSON-backed EMR starter for LIGHT Hospital",
+  "scripts": {
+    "start": "node server.js"
+  }
+}

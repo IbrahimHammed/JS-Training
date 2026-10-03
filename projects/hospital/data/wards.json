@@ -1,0 +1,6 @@
+[
+  {"id":"w-1001","ward":"Willow Ward","bed":"W-01","patient":"Theo Williams","admitted":"2026-10-02","status":"Occupied","notes":"Routine observation"},
+  {"id":"w-1002","ward":"Willow Ward","bed":"W-02","patient":"","admitted":"","status":"Available","notes":""},
+  {"id":"w-1003","ward":"Garden Ward","bed":"G-01","patient":"","admitted":"","status":"Available","notes":""},
+  {"id":"w-1004","ward":"Garden Ward","bed":"G-02","patient":"","admitted":"","status":"Cleaning","notes":"Turnover in progress"}
+]

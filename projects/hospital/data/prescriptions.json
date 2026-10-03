@@ -1,0 +1,4 @@
+[
+  {"id":"rx-1001","patient":"Daniel Kim","medication":"Cetirizine","dose":"10 mg","frequency":"Once daily","prescriber":"Dr. Maya Chen","date":"2026-10-01","status":"Active","notes":"Take with water."},
+  {"id":"rx-1002","patient":"Sofia Patel","medication":"Vitamin D3","dose":"1000 IU","frequency":"Once daily","prescriber":"Dr. Maya Chen","date":"2026-09-29","status":"Dispensed","notes":"Take with a meal."}
+]

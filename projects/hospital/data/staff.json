@@ -1,0 +1,238 @@
+[
+  {
+    "id": "s-1001",
+    "name": "Maya Chen",
+    "role": "Physician",
+    "department": "Family medicine",
+    "phone": "+1 (555) 100-2201",
+    "email": "maya.chen@example.test",
+    "status": "Active"
+  },
+  {
+    "id": "s-1002",
+    "name": "Elena Brooks",
+    "role": "Nurse",
+    "department": "Outpatient care",
+    "phone": "+1 (555) 100-2202",
+    "email": "elena.brooks@example.test",
+    "status": "Active"
+  },
+  {
+    "id": "s-1003",
+    "name": "Noah Mensah",
+    "role": "Lab technician",
+    "department": "Diagnostics",
+    "phone": "+1 (555) 100-2203",
+    "email": "noah.mensah@example.test",
+    "status": "Active"
+  },
+  {
+    "id": "s-1004",
+    "name": "Priya Nair",
+    "role": "Pharmacist",
+    "department": "Pharmacy",
+    "phone": "+1 (555) 100-2204",
+    "email": "priya.nair@example.test",
+    "status": "Active"
+  },
+  {
+    "name": "Dr. Ruth Okoro",
+    "role": "Physician",
+    "department": "Cardiology",
+    "specialty": "Cardiology",
+    "id": "s-seed-001",
+    "phone": "+1 (555) 410-1000",
+    "email": "dr.ruth.okoro@example.test",
+    "status": "Active"
+  },
+  {
+    "name": "Dr. Samuel Adeyemi",
+    "role": "Physician",
+    "department": "Pediatrics",
+    "specialty": "Pediatrics",
+    "id": "s-seed-002",
+    "phone": "+1 (555) 410-1001",
+    "email": "dr.samuel.adeyemi@example.test",
+    "status": "Active"
+  },
+  {
+    "name": "Dr. Leila Haddad",
+    "role": "Physician",
+    "department": "Neurology",
+    "specialty": "Neurology",
+    "id": "s-seed-003",
+    "phone": "+1 (555) 410-1002",
+    "email": "dr.leila.haddad@example.test",
+    "status": "Active"
+  },
+  {
+    "name": "Dr. Jonah Mensah",
+    "role": "Physician",
+    "department": "Oncology",
+    "specialty": "Medical oncology",
+    "id": "s-seed-004",
+    "phone": "+1 (555) 410-1003",
+    "email": "dr.jonah.mensah@example.test",
+    "status": "Active"
+  },
+  {
+    "name": "Dr. Zara Khan",
+    "role": "Physician",
+    "department": "Dermatology",
+    "specialty": "Dermatology",
+    "id": "s-seed-005",
+    "phone": "+1 (555) 410-1004",
+    "email": "dr.zara.khan@example.test",
+    "status": "Active"
+  },
+  {
+    "name": "Dr. Elias Rivera",
+    "role": "Physician",
+    "department": "Orthopedics",
+    "specialty": "Orthopedic surgery",
+    "id": "s-seed-006",
+    "phone": "+1 (555) 410-1005",
+    "email": "dr.elias.rivera@example.test",
+    "status": "Active"
+  },
+  {
+    "name": "Dr. Amara Bello",
+    "role": "Physician",
+    "department": "Womens health",
+    "specialty": "Obstetrics and gynecology",
+    "id": "s-seed-007",
+    "phone": "+1 (555) 410-1006",
+    "email": "dr.amara.bello@example.test",
+    "status": "Active"
+  },
+  {
+    "name": "Dr. Marcus Nguyen",
+    "role": "Physician",
+    "department": "Behavioral health",
+    "specialty": "Psychiatry",
+    "id": "s-seed-008",
+    "phone": "+1 (555) 410-1007",
+    "email": "dr.marcus.nguyen@example.test",
+    "status": "Active"
+  },
+  {
+    "name": "Dr. Talia Brooks",
+    "role": "Physician",
+    "department": "Emergency medicine",
+    "specialty": "Emergency medicine",
+    "id": "s-seed-009",
+    "phone": "+1 (555) 410-1008",
+    "email": "dr.talia.brooks@example.test",
+    "status": "Active"
+  },
+  {
+    "name": "Dr. Isaac Carter",
+    "role": "Physician",
+    "department": "Internal medicine",
+    "specialty": "Internal medicine",
+    "id": "s-seed-010",
+    "phone": "+1 (555) 410-1009",
+    "email": "dr.isaac.carter@example.test",
+    "status": "Active"
+  },
+  {
+    "name": "Grace Williams",
+    "role": "Nurse",
+    "department": "Critical care",
+    "specialty": "ICU nursing",
+    "id": "s-seed-011",
+    "phone": "+1 (555) 410-1010",
+    "email": "grace.williams@example.test",
+    "status": "Active"
+  },
+  {
+    "name": "Nia Johnson",
+    "role": "Nurse",
+    "department": "Pediatrics",
+    "specialty": "Pediatric nursing",
+    "id": "s-seed-012",
+    "phone": "+1 (555) 410-1011",
+    "email": "nia.johnson@example.test",
+    "status": "Active"
+  },
+  {
+    "name": "Mina Patel",
+    "role": "Nurse",
+    "department": "Maternity",
+    "specialty": "Maternity nursing",
+    "id": "s-seed-013",
+    "phone": "+1 (555) 410-1012",
+    "email": "mina.patel@example.test",
+    "status": "Active"
+  },
+  {
+    "name": "Owen Foster",
+    "role": "Nurse",
+    "department": "Emergency medicine",
+    "specialty": "Emergency nursing",
+    "id": "s-seed-014",
+    "phone": "+1 (555) 410-1013",
+    "email": "owen.foster@example.test",
+    "status": "Active"
+  },
+  {
+    "name": "Naomi Okeke",
+    "role": "Nurse",
+    "department": "Oncology",
+    "specialty": "Oncology nursing",
+    "id": "s-seed-015",
+    "phone": "+1 (555) 410-1014",
+    "email": "naomi.okeke@example.test",
+    "status": "Active"
+  },
+  {
+    "name": "Caleb Miller",
+    "role": "Lab technician",
+    "department": "Pathology",
+    "specialty": "Histopathology",
+    "id": "s-seed-016",
+    "phone": "+1 (555) 410-1015",
+    "email": "caleb.miller@example.test",
+    "status": "Active"
+  },
+  {
+    "name": "Ada Nair",
+    "role": "Lab technician",
+    "department": "Diagnostics",
+    "specialty": "Microbiology",
+    "id": "s-seed-017",
+    "phone": "+1 (555) 410-1016",
+    "email": "ada.nair@example.test",
+    "status": "Active"
+  },
+  {
+    "name": "Julian Carter",
+    "role": "Pharmacist",
+    "department": "Clinical pharmacy",
+    "specialty": "Clinical pharmacy",
+    "id": "s-seed-018",
+    "phone": "+1 (555) 410-1017",
+    "email": "julian.carter@example.test",
+    "status": "Active"
+  },
+  {
+    "name": "Imani Rivera",
+    "role": "Nurse",
+    "department": "Diagnostic imaging",
+    "specialty": "Radiology nursing",
+    "id": "s-seed-019",
+    "phone": "+1 (555) 410-1018",
+    "email": "imani.rivera@example.test",
+    "status": "Active"
+  },
+  {
+    "name": "Miles Adeyemi",
+    "role": "Administrator",
+    "department": "Health records",
+    "specialty": "Medical records",
+    "id": "s-seed-020",
+    "phone": "+1 (555) 410-1019",
+    "email": "miles.adeyemi@example.test",
+    "status": "Active"
+  }
+]

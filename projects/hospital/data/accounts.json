@@ -1,0 +1,38 @@
+[
+  {
+    "id": "f39aad61-5a55-48a9-b7f8-cee1fe7b44ec",
+    "principalType": "employee",
+    "principalId": "s-1001",
+    "name": "Maya Chen",
+    "email": "maya.chen@example.test",
+    "salt": "6438b048c90336dd85b714acb5404a05",
+    "passwordHash": "fae6497d35cdca5d928b2c0ebacd734e998fe844b78aa81ac84de22873c4747926d212fdb9d55904eb1ad1395803a7afbdd000f6ac9cbc70a6de447d24fd5096",
+    "accessRole": "admin",
+    "active": true,
+    "createdAt": "2026-10-03T20:19:15.162Z"
+  },
+  {
+    "id": "eb315d9b-f801-4cac-ab43-df166a5c26e8",
+    "principalType": "patient",
+    "principalId": "p-1001",
+    "name": "Amina Okafor",
+    "email": "amina.okafor@example.test",
+    "salt": "0fe618c9df97bc98361b7073650a06cf",
+    "passwordHash": "591b8446c4ec0514ad5b5b9dcb6da02f60010e1390aa6b983ea6a66bb9dabdf917f4d4386c42e2f90e4f09bd2c46ea6cd3c9fec691321f2c5ceeb9b7c617ffe7",
+    "accessRole": "user",
+    "active": true,
+    "createdAt": "2026-10-03T20:21:14.824Z"
+  },
+  {
+    "id": "91161c36-ab08-4361-aa9d-4fc329b3cdee",
+    "principalType": "employee",
+    "principalId": "s-seed-001",
+    "name": "Dr. Ruth Okoro",
+    "email": "dr.ruth.okoro@example.test",
+    "salt": "24c3bc103df7044f41de10d16412885e",
+    "passwordHash": "460fe3e57e61e7537516b550524eb668d74b7bfc322b4e347678cd0d84fc06f662bbefe957eaae8cb25904ac176d8b8b132192542799baac1cc4f20cadeca715",
+    "accessRole": "user",
+    "active": true,
+    "createdAt": "2026-10-03T20:21:23.694Z"
+  }
+]

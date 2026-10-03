@@ -1,0 +1,6 @@
+[
+  {"id":"a-1001","patient":"Amina Okafor","clinician":"Dr. Maya Chen","date":"2026-10-03","time":"09:00","type":"General consultation","status":"Scheduled"},
+  {"id":"a-1002","patient":"Daniel Kim","clinician":"Nurse Elena Brooks","date":"2026-10-03","time":"10:30","type":"Follow-up","status":"Checked in"},
+  {"id":"a-1003","patient":"Sofia Patel","clinician":"Dr. Maya Chen","date":"2026-10-03","time":"13:15","type":"Wellness visit","status":"Scheduled"},
+  {"id":"a-1004","patient":"Theo Williams","clinician":"Dr. Maya Chen","date":"2026-10-05","time":"11:00","type":"Lab review","status":"Scheduled"}
+]

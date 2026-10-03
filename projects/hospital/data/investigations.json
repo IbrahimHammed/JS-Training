@@ -1,0 +1,5 @@
+[
+  {"id":"l-1001","patient":"Amina Okafor","test":"Complete blood count","orderedBy":"Dr. Maya Chen","date":"2026-10-02","status":"In progress","result":""},
+  {"id":"l-1002","patient":"Daniel Kim","test":"Lipid panel","orderedBy":"Dr. Maya Chen","date":"2026-10-01","status":"Results ready","result":"Reviewed with care team"},
+  {"id":"l-1003","patient":"Theo Williams","test":"Metabolic panel","orderedBy":"Dr. Maya Chen","date":"2026-09-30","status":"Sample collected","result":""}
+]
