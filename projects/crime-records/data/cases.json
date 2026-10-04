@@ -1,0 +1,112 @@
+[
+  {
+    "id": "record-2001",
+    "caseNumber": "CR-2026-0148",
+    "suspectId": "sus-1001",
+    "offense": "Alleged vehicle theft",
+    "date": "2026-05-19",
+    "disposition": "Under investigation",
+    "officerId": "officer-1",
+    "summary": "Vehicle reported missing from a public parking area. Interview and available video evidence are under review.",
+    "createdAt": "2026-05-20T09:00:00.000Z"
+  },
+  {
+    "id": "record-2002",
+    "caseNumber": "CR-2025-0921",
+    "suspectId": "sus-1001",
+    "offense": "Alleged trespass",
+    "date": "2025-11-04",
+    "disposition": "Dismissed",
+    "officerId": "officer-2",
+    "summary": "Complaint reviewed; matter dismissed for insufficient evidence. No finding of guilt.",
+    "createdAt": "2025-11-05T10:10:00.000Z"
+  },
+  {
+    "id": "record-2003",
+    "caseNumber": "CR-2026-0172",
+    "suspectId": "sus-1002",
+    "offense": "Alleged shoplifting",
+    "date": "2026-06-02",
+    "disposition": "Charged",
+    "officerId": "officer-2",
+    "summary": "A formal charge was filed. The case is pending court proceedings; charges are allegations, not a finding of guilt.",
+    "createdAt": "2026-06-03T08:45:00.000Z"
+  },
+  {
+    "id": "record-2004",
+    "caseNumber": "CR-2024-0710",
+    "suspectId": "sus-1002",
+    "offense": "Alleged property damage",
+    "date": "2024-08-12",
+    "disposition": "Acquitted",
+    "officerId": "officer-1",
+    "summary": "Court returned a not-guilty verdict. Retained for historical reference only.",
+    "createdAt": "2024-08-13T12:00:00.000Z"
+  },
+  {
+    "id": "record-2005",
+    "caseNumber": "CR-2026-0189",
+    "suspectId": "sus-1003",
+    "offense": "Alleged burglary",
+    "date": "2026-06-14",
+    "disposition": "Under investigation",
+    "officerId": "officer-3",
+    "summary": "A residential break-in was reported. Scene evidence is being processed and witnesses interviewed.",
+    "createdAt": "2026-06-15T11:30:00.000Z"
+  },
+  {
+    "id": "record-2006",
+    "caseNumber": "CR-2023-0412",
+    "suspectId": "sus-1003",
+    "offense": "Theft",
+    "date": "2023-05-08",
+    "disposition": "Convicted",
+    "officerId": "officer-3",
+    "summary": "Conviction recorded by the court. Verify the official court record before relying on this entry.",
+    "createdAt": "2023-05-09T10:00:00.000Z"
+  },
+  {
+    "id": "record-2007",
+    "caseNumber": "CR-2026-0204",
+    "suspectId": "sus-1004",
+    "offense": "Alleged fraud",
+    "date": "2026-06-29",
+    "disposition": "Closed",
+    "officerId": "officer-1",
+    "summary": "Investigation concluded without charges. Record retained in accordance with applicable policy.",
+    "createdAt": "2026-06-30T08:00:00.000Z"
+  },
+  {
+    "id": "record-2008",
+    "caseNumber": "CR-2026-0218",
+    "suspectId": "sus-1005",
+    "offense": "Alleged robbery",
+    "date": "2026-07-11",
+    "disposition": "Charged",
+    "officerId": "officer-2",
+    "summary": "Charge filed; court date pending. The charge is an allegation and does not establish guilt.",
+    "createdAt": "2026-07-12T13:25:00.000Z"
+  },
+  {
+    "id": "record-2009",
+    "caseNumber": "CR-2025-0876",
+    "suspectId": "sus-1005",
+    "offense": "Alleged assault",
+    "date": "2025-10-21",
+    "disposition": "Dismissed",
+    "officerId": "officer-3",
+    "summary": "Matter dismissed by the court. No finding of guilt.",
+    "createdAt": "2025-10-22T09:15:00.000Z"
+  },
+  {
+    "id": "record-2010",
+    "caseNumber": "CR-2026-0241",
+    "suspectId": "sus-1006",
+    "offense": "Alleged identity theft",
+    "date": "2026-07-23",
+    "disposition": "Under investigation",
+    "officerId": "officer-1",
+    "summary": "An identity theft complaint is under investigation. No charges have been filed.",
+    "createdAt": "2026-07-24T10:35:00.000Z"
+  }
+]

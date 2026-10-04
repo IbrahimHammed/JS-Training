@@ -1,0 +1,62 @@
+[
+  {
+    "id": "sus-1001",
+    "name": "Jordan Ellis",
+    "alias": "J. North",
+    "dateOfBirth": "1988-03-14",
+    "gender": "Male",
+    "status": "Wanted",
+    "photo": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=240&h=240&q=80",
+    "createdAt": "2026-02-12T10:20:00.000Z"
+  },
+  {
+    "id": "sus-1002",
+    "name": "Maya Brooks",
+    "alias": "",
+    "dateOfBirth": "1994-09-22",
+    "gender": "Female",
+    "status": "In custody",
+    "photo": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=240&h=240&q=80",
+    "createdAt": "2026-02-15T12:05:00.000Z"
+  },
+  {
+    "id": "sus-1003",
+    "name": "Andre Coleman",
+    "alias": "A.C.",
+    "dateOfBirth": "1979-12-03",
+    "gender": "Male",
+    "status": "Wanted",
+    "photo": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=240&h=240&q=80",
+    "createdAt": "2026-03-03T09:10:00.000Z"
+  },
+  {
+    "id": "sus-1004",
+    "name": "Nia Clarke",
+    "alias": "",
+    "dateOfBirth": "1991-06-18",
+    "gender": "Female",
+    "status": "Released",
+    "photo": "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=240&h=240&q=80",
+    "createdAt": "2026-03-10T08:35:00.000Z"
+  },
+  {
+    "id": "sus-1005",
+    "name": "Samuel Reed",
+    "alias": "Sam R.",
+    "dateOfBirth": "1984-01-29",
+    "gender": "Male",
+    "status": "Wanted",
+    "photo": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=240&h=240&q=80",
+    "createdAt": "2026-04-08T14:40:00.000Z"
+  },
+  {
+    "id": "sus-1006",
+    "name": "Lena Washington",
+    "alias": "",
+    "dateOfBirth": "1997-11-07",
+    "gender": "Female",
+    "status": "In custody",
+    "photo": "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=240&h=240&q=80",
+    "createdAt": "2026-04-18T11:15:00.000Z"
+  }
+]

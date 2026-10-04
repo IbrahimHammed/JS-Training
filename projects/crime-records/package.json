@@ -1,0 +1,12 @@
+{
+  "name": "casebook-crime-records",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A local, fictional-data prototype for police case records",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

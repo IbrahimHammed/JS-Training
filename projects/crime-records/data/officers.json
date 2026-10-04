@@ -1,0 +1,32 @@
+[
+    {
+        "id":  "officer-1",
+        "name":  "Riley Morgan",
+        "rank":  "Detective",
+        "badge":  "B-1042",
+        "unit":  "Property Crimes",
+        "email":  "r.morgan@example.test",
+        "phone":  "+1 (555) 010-1042",
+        "bio":  "A detail-oriented investigator focused on property crime cases and careful evidence documentation."
+    },
+    {
+        "id":  "officer-2",
+        "name":  "Casey Bennett",
+        "rank":  "Detective",
+        "badge":  "B-1186",
+        "unit":  "Community Safety",
+        "email":  "c.bennett@example.test",
+        "phone":  "+1 (555) 010-1186",
+        "bio":  "Works with community partners and witnesses to build clear, thorough case records."
+    },
+    {
+        "id":  "officer-3",
+        "name":  "Alex Rivera",
+        "rank":  "Sergeant",
+        "badge":  "B-0931",
+        "unit":  "Investigations",
+        "email":  "a.rivera@example.test",
+        "phone":  "+1 (555) 010-0931",
+        "bio":  "Supervises investigations and supports consistent, accurate case documentation."
+    }
+]

@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f6f2">
+  <meta name="description" content="A local prototype for organizing fictional police case records.">
+  <title>Casebook | Records, in order</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#overview" aria-label="Casebook overview">
+        <span class="brand-mark" aria-hidden="true">⌕</span>
+        <span class="brand-copy"><strong>casebook</strong><small>RECORDS, IN ORDER</small></span>
+      </a>
+      <div class="workspace-label">WORKSPACE</div>
+      <nav class="nav-list" aria-label="Main navigation">
+        <button class="nav-item active" data-page="overview"><span class="nav-icon" aria-hidden="true">⌂</span>Overview</button>
+        <button class="nav-item" data-page="suspects"><span class="nav-icon" aria-hidden="true">♙</span>People <span class="nav-count" data-count="suspects"></span></button>
+        <button class="nav-item" data-page="cases"><span class="nav-icon" aria-hidden="true">▤</span>Case records <span class="nav-count" data-count="cases"></span></button>
+        <button class="nav-item" data-page="officers"><span class="nav-icon" aria-hidden="true">♧</span>Officers <span class="nav-count" data-count="officers"></span></button>
+      </nav>
+      <div class="sidebar-note"><span aria-hidden="true">✳</span><strong>Handle with care.</strong><small>Fictional demo data only.<br>Protect people's rights and privacy.</small></div>
+      <div class="profile-chip"><div class="profile-avatar">CB</div><div><strong>Casebook demo</strong><small>Local · no sign-in</small></div><span class="profile-dot"></span></div>
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar">
+        <button class="icon-button mobile-menu" id="menu-toggle" aria-label="Open navigation">☰</button>
+        <div class="breadcrumb"><span>Casebook</span><span class="crumb-slash">/</span><strong id="crumb-current">Overview</strong></div>
+        <div class="topbar-actions"><span class="today-label"><span class="live-dot"></span><span id="today-date"></span></span><button class="button button-outline" id="new-case-top" type="button"><span aria-hidden="true">＋</span> New case</button><div class="profile-avatar top-avatar">CB</div></div>
+      </header>
+      <section class="page-content" id="page-content" aria-live="polite"></section>
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <div class="modal-backdrop" id="modal-backdrop" hidden>
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div class="modal-heading"><div><span class="eyebrow" id="modal-eyebrow">NEW RECORD</span><h2 id="modal-title">Add a record</h2></div><button class="icon-button modal-close" id="modal-close" aria-label="Close dialog">×</button></div>
+      <form id="record-form"><div class="form-grid" id="form-fields"></div><div class="form-error" id="form-error" role="alert" hidden></div><div class="modal-actions"><button type="button" class="button button-quiet" id="cancel-button">Cancel</button><button type="submit" class="button button-primary"><span id="save-label">Save record</span><span aria-hidden="true">↗</span></button></div></form>
+    </section>
+  </div>
+</body>
+</html>
