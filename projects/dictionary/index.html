@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f7f4">
+  <meta name="description" content="Look up words in a local English dictionary of 500 words.">
+  <title>Wordwell — Find the right words</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="page-shell">
+    <header class="site-header">
+      <a class="brand" href="./" aria-label="Wordwell home">
+        <span class="brand-icon" aria-hidden="true">
+          <svg viewBox="0 0 36 36" fill="none"><path d="M7 9.5c0-1.1.9-2 2-2h7.4c2.2 0 4.2.8 5.6 2.1 1.4-1.3 3.4-2.1 5.6-2.1H29c1.1 0 2 .9 2 2v17c0 .8-.7 1.5-1.5 1.5h-2c-2.1 0-4.1.8-5.5 2.2a.7.7 0 0 1-1 0c-1.4-1.4-3.4-2.2-5.5-2.2h-7c-.8 0-1.5-.7-1.5-1.5v-17Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M20 10v17M11 13h4m-4 4h4m10-4h2m-2 4h2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </span>
+        <span class="brand-name">wordwell<span>.</span></span>
+      </a>
+      <span class="header-note"><span class="header-sparkle" aria-hidden="true">✳</span> A little more meaning, every day</span>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="page-title">
+        <div class="eyebrow"><span class="eyebrow-line"></span> YOUR EVERYDAY DICTIONARY</div>
+        <h1 id="page-title">Find the right<br class="mobile-break"> <span>words.</span></h1>
+        <p class="hero-copy">A curious mind is always in good company.<br class="desktop-break"> Look up a word and see where it takes you.</p>
+
+        <form class="search-form" id="search-form" role="search">
+          <label class="sr-only" for="word-input">Enter a word to look up</label>
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <input id="word-input" name="word" type="search" placeholder="Try a word, any word…" autocomplete="off" autocapitalize="none" spellcheck="false" enterkeyhint="search" required>
+          <button class="go-button" id="go-button" type="submit">Go <span aria-hidden="true">↗</span></button>
+        </form>
+        <div class="quick-search">
+          <span>Need a little inspiration?</span>
+          <button type="button" class="word-chip" data-word="courage">courage</button>
+          <button type="button" class="word-chip" data-word="luminous">luminous</button>
+          <button type="button" class="word-chip" data-word="happy">happy</button>
+        </div>
+      </section>
+
+      <section class="dictionary-panel" aria-label="Dictionary results">
+        <div class="panel-heading">
+          <div>
+            <span class="panel-overline">500-WORD LOCAL DICTIONARY</span>
+            <h2 id="panel-title">A world of words awaits</h2>
+          </div>
+          <span class="panel-decoration" aria-hidden="true">✳</span>
+        </div>
+        <div id="results-content" aria-live="polite" aria-atomic="true">
+          <div class="empty-state">
+            <div class="empty-illustration" aria-hidden="true">
+              <span class="illustration-sun"></span>
+              <span class="illustration-book"><span></span><span></span><span></span></span>
+              <span class="illustration-star star-one">✳</span>
+              <span class="illustration-star star-two">✦</span>
+            </div>
+            <p class="empty-title">Your next favorite word is out there.</p>
+            <p class="empty-copy">Search above to discover definitions and examples<br class="desktop-break"> from your offline word collection.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>Made for the love of language <span aria-hidden="true">♡</span></span>
+      <span>Based on <a href="https://www.gutenberg.org/ebooks/29765" target="_blank" rel="noreferrer">Webster’s Unabridged Dictionary</a> · local data</span>
+    </footer>
+  </div>
+</body>
+</html>

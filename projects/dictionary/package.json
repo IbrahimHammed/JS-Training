@@ -1,0 +1,12 @@
+{
+  "name": "wordwell-local-dictionary",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A local English dictionary with 500 word definitions",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
