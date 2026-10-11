@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f7f9">
+  <meta name="description" content="Catch the falling red balls, beat your high score, and climb the leaderboard.">
+  <title>Red Ball Run — Catch. Score. Repeat.</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <main class="game-shell">
+    <header class="topbar">
+      <a class="brand" href="./" aria-label="Red Ball Run home">
+        <span class="brand-mark" aria-hidden="true">R</span>
+        <span><strong>red ball run</strong><small>QUICK REFLEXES. BIG SCORES.</small></span>
+      </a>
+      <span class="top-note"><span class="online-dot"></span> Local leaderboard</span>
+    </header>
+
+    <section class="intro">
+      <div class="eyebrow"><span></span> READY, SET, CATCH</div>
+      <h1>Keep your eye<br class="mobile-break"> on the <span>ball.</span></h1>
+      <p>Move left and right. Catch the red balls. Try not to let five slip by.</p>
+    </section>
+
+    <section class="game-layout" aria-label="Red Ball Run game">
+      <div class="game-column">
+        <div class="game-toolbar">
+          <div class="game-label"><span class="live-dot" id="game-live-dot"></span><strong id="game-state">READY TO PLAY</strong></div>
+          <div class="toolbar-hint"><kbd>←</kbd><kbd>→</kbd><span>to move</span></div>
+        </div>
+        <div class="game-stage">
+          <canvas id="game-canvas" aria-label="Game area. Catch the falling red balls with your paddle."></canvas>
+          <div class="game-overlay" id="game-overlay">
+            <div class="overlay-card">
+              <div class="overlay-icon" id="overlay-icon" aria-hidden="true">✦</div>
+              <p class="overlay-kicker" id="overlay-kicker">YOUR NEXT HIGH SCORE</p>
+              <h2 id="overlay-title">Ready to play?</h2>
+              <p class="overlay-copy" id="overlay-copy">Choose a speed, enter your name, and catch as many balls as you can.</p>
+              <label class="speed-label" for="speed-level">CHOOSE YOUR SPEED</label>
+              <select class="speed-select" id="speed-level" name="speedLevel">
+                <option value="slow" selected>Slow · easy to follow</option>
+                <option value="medium">Medium · a little quicker</option>
+                <option value="fast">Fast · test your reflexes</option>
+              </select>
+              <form class="player-form" id="player-form">
+                <label class="sr-only" for="player-name">Your name</label>
+                <input id="player-name" name="playerName" type="text" maxlength="20" placeholder="Your name" autocomplete="name" required>
+                <button class="play-button" id="play-button" type="submit">Play <span aria-hidden="true">↗</span></button>
+              </form>
+              <p class="overlay-error" id="overlay-error" role="alert" hidden></p>
+            </div>
+          </div>
+        </div>
+        <div class="mobile-controls" aria-label="Touch controls">
+          <button class="move-button" id="move-left" type="button" aria-label="Move left">←</button>
+          <span>MOVE YOUR PADDLE</span>
+          <button class="move-button" id="move-right" type="button" aria-label="Move right">→</button>
+        </div>
+        <div class="score-strip">
+          <div class="score-stat"><span class="stat-icon catch-icon" aria-hidden="true">↓</span><span><small>CAUGHT</small><strong id="caught-count">0</strong></span></div>
+          <div class="score-stat main-score"><span class="stat-icon score-icon" aria-hidden="true">✳</span><span><small>YOUR SCORE</small><strong id="score-count">0</strong></span></div>
+          <div class="score-stat"><span class="stat-icon miss-icon" aria-hidden="true">!</span><span><small>MISSED</small><strong><span id="missed-count">0</span><span class="miss-limit"> / 5</span></strong></span></div>
+        </div>
+        <p class="game-footnote">Each catch <strong>+1 point</strong> <span>·</span> Misses use one of your <strong>5 lives</strong></p>
+      </div>
+
+      <aside class="leaderboard panel" aria-labelledby="leaderboard-title">
+        <div class="leaderboard-heading">
+          <div><span class="panel-eyebrow">THE TOP CATCHERS</span><h2 id="leaderboard-title">Leaderboard</h2></div>
+          <span class="trophy" aria-hidden="true">♛</span>
+        </div>
+        <div class="leaderboard-content" id="leaderboard-content" aria-live="polite">
+          <div class="leaderboard-loading"><span class="mini-loader"></span> Loading scores…</div>
+        </div>
+        <div class="leaderboard-footer"><span class="online-dot"></span> Scores saved on this device</div>
+      </aside>
+    </section>
+
+    <footer class="page-footer"><span>Quick hands. Cool head. <strong>You’ve got this.</strong></span><span>RED BALL RUN <span aria-hidden="true">©</span> 2026</span></footer>
+  </main>
+</body>
+</html>

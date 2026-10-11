@@ -1,0 +1,12 @@
+{
+  "name": "red-ball-runner",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A simple red-ball catching game with a persistent local leaderboard",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
