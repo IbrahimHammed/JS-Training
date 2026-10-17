@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080d12">
+  <meta name="description" content="Watch a minimum-cost transshipment plan move goods from factories through distribution hubs to markets.">
+  <title>Freight Flow — Transshipment Lab</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="./" aria-label="Freight Flow home">
+        <span class="brand-mark" aria-hidden="true">F</span>
+        <span>freight<span class="brand-accent">flow</span><small>NETWORK OPTIMIZER</small></span>
+      </a>
+      <div class="top-status"><span class="status-dot"></span> TRANS-SHIPMENT LAB <span class="top-divider">/</span> MODEL 01</div>
+    </header>
+
+    <section class="intro">
+      <div class="eyebrow"><span></span> OPERATIONS RESEARCH · LIVE SIMULATION</div>
+      <h1>Every unit. <span>Every route.</span><br class="mobile-break"> Optimized.</h1>
+      <p>Three factories. Two transfer hubs. Three markets. Watch the minimum-cost flow find its way.</p>
+    </section>
+
+    <section class="summary-grid" aria-label="Optimized plan summary">
+      <article class="metric-card">
+        <span class="metric-label">TOTAL DELIVERED</span>
+        <strong id="metric-delivered">—</strong>
+        <span class="metric-note" id="metric-demand-note">of 12,000 units demanded</span>
+      </article>
+      <article class="metric-card">
+        <span class="metric-label">MINIMUM ROUTING COST</span>
+        <strong id="metric-cost">—</strong>
+        <span class="metric-note">cost units · all route legs</span>
+      </article>
+      <article class="metric-card">
+        <span class="metric-label">CAPACITY LEFT UNUSED</span>
+        <strong id="metric-unused">—</strong>
+        <span class="metric-note">supply not used by this plan</span>
+      </article>
+      <article class="metric-card progress-card">
+        <span class="metric-label">DELIVERY PROGRESS</span>
+        <strong><span id="metric-progress">0</span><small> / <span id="metric-progress-total">12,000</span></small></strong>
+        <span class="progress-track"><span id="progress-bar"></span></span>
+        <span class="metric-note" id="run-status" aria-live="polite">Ready to dispatch</span>
+      </article>
+    </section>
+
+    <aside id="shortfall-notice" class="shortfall-notice" role="status" aria-live="polite" hidden>
+      <span class="shortfall-mascot" aria-hidden="true">
+        <svg viewBox="0 0 52 44" fill="none">
+          <path d="M7 17h25a4 4 0 0 1 4 4v13H7a4 4 0 0 1-4-4V21a4 4 0 0 1 4-4Z" fill="#42D9E8"/>
+          <path d="M36 23h7l6 7v4H36V23Z" fill="#73E2A0"/>
+          <path d="M39 25v5h7l-4-5h-3Z" fill="#C6F7E0"/>
+          <circle cx="14" cy="35" r="4" fill="#E8EDF2"/><circle cx="42" cy="35" r="4" fill="#E8EDF2"/>
+          <circle cx="17" cy="24" r="1.5" fill="#081016"/><circle cx="25" cy="24" r="1.5" fill="#081016"/>
+          <path d="M18 30c1.5-2 4.5-2 6 0" stroke="#081016" stroke-width="1.7" stroke-linecap="round"/>
+          <path d="M3 9c2-2 4-2 6 0m-4-5c2-2 4-2 6 0" stroke="#FFBA62" stroke-width="1.8" stroke-linecap="round"/>
+          <path d="M43 8v5m-2.5-2.5h5" stroke="#A78BFA" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <span class="shortfall-copy">
+        <strong id="shortfall-title">The markets are extra hungry!</strong>
+        <span id="shortfall-detail">We need more stock to fill every order.</span>
+      </span>
+      <span class="shortfall-badge"><span id="shortfall-amount">0</span> units short</span>
+    </aside>
+
+    <section class="setup-panel" aria-labelledby="setup-title">
+      <div class="panel-heading compact-heading">
+        <div><span class="panel-overline">NETWORK INPUTS</span><h2 id="setup-title">Set capacity & demand</h2></div>
+        <span class="cost-unit">whole units · 0 to 1,000,000</span>
+      </div>
+      <form id="network-setup" class="setup-form">
+        <fieldset class="setup-group">
+          <legend><span class="group-dot dot-cyan"></span> Factory capacity</legend>
+          <label class="setup-field" for="capacity-A"><span>Factory A</span><input id="capacity-A" name="capacity-A" type="number" min="0" max="1000000" step="1" value="1000" required></label>
+          <label class="setup-field" for="capacity-B"><span>Factory B</span><input id="capacity-B" name="capacity-B" type="number" min="0" max="1000000" step="1" value="5000" required></label>
+          <label class="setup-field" for="capacity-C"><span>Factory C</span><input id="capacity-C" name="capacity-C" type="number" min="0" max="1000000" step="1" value="7000" required></label>
+        </fieldset>
+        <fieldset class="setup-group">
+          <legend><span class="group-dot dot-amber"></span> Market demand</legend>
+          <label class="setup-field" for="demand-X"><span>Market X</span><input id="demand-X" name="demand-X" type="number" min="0" max="1000000" step="1" value="3000" required></label>
+          <label class="setup-field" for="demand-Y"><span>Market Y</span><input id="demand-Y" name="demand-Y" type="number" min="0" max="1000000" step="1" value="4000" required></label>
+          <label class="setup-field" for="demand-Z"><span>Market Z</span><input id="demand-Z" name="demand-Z" type="number" min="0" max="1000000" step="1" value="5000" required></label>
+        </fieldset>
+        <div class="setup-actions">
+          <p id="setup-message" class="setup-message" aria-live="polite">Edit values, then optimize the network before dispatch.</p>
+          <button class="button button-primary" type="submit"><span aria-hidden="true">↻</span> Apply & optimize</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="network-panel" aria-labelledby="network-title">
+      <div class="panel-heading">
+        <div>
+          <span class="panel-overline">OPTIMAL TRANS-SHIPMENT PLAN</span>
+          <h2 id="network-title">The supply network</h2>
+        </div>
+        <div class="legend" aria-label="Network legend">
+          <span><i class="legend-line legend-active"></i> Active route</span>
+          <span><i class="legend-dot"></i> Moving shipment</span>
+        </div>
+      </div>
+
+      <div class="network-scroll">
+        <svg id="network" viewBox="0 0 1200 600" role="img" aria-labelledby="network-svg-title network-svg-desc">
+          <title id="network-svg-title">Factory to market transshipment network</title>
+          <desc id="network-svg-desc">Goods move from three factories through two transshipment hubs and on to three markets along cost-optimized routes.</desc>
+          <g id="route-layer"></g>
+          <g id="label-layer"></g>
+          <g id="packet-layer"></g>
+          <g id="node-layer"></g>
+        </svg>
+      </div>
+      <div class="network-footer">
+        <span><b class="footer-swatch swatch-cyan"></b> FACTORIES <small id="factory-total">13,000 total capacity</small></span>
+        <span><b class="footer-swatch swatch-violet"></b> TRANS-SHIPMENT <small>2 transfer hubs</small></span>
+        <span><b class="footer-swatch swatch-amber"></b> MARKETS <small id="market-total">12,000 total demand</small></span>
+      </div>
+    </section>
+
+    <section class="lower-grid">
+      <article class="route-panel">
+        <div class="panel-heading compact-heading">
+          <div><span class="panel-overline">COST ASSIGNMENTS</span><h2>Rates by route</h2></div>
+          <span class="cost-unit">cost units / item</span>
+        </div>
+        <div class="rate-columns">
+          <div class="rate-group">
+            <h3><span class="group-dot dot-cyan"></span> Factory → hub</h3>
+            <div id="factory-rates" class="rate-list"></div>
+          </div>
+          <div class="rate-group">
+            <h3><span class="group-dot dot-amber"></span> Hub → market</h3>
+            <div id="market-rates" class="rate-list"></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="controls-panel">
+        <div class="panel-heading compact-heading">
+          <div><span class="panel-overline">SIMULATION CONTROLS</span><h2>Dispatch the flow</h2></div>
+          <span class="control-icon" aria-hidden="true">↗</span>
+        </div>
+        <p>Shipments are bundled into 500-unit batches. Apply new inputs to re-optimize the plan before dispatch.</p>
+        <div class="control-row">
+          <button class="button button-primary" id="play-button" type="button"><span aria-hidden="true">▶</span> Start simulation</button>
+          <button class="button button-secondary" id="reset-button" type="button"><span aria-hidden="true">↺</span> Reset</button>
+          <label class="speed-control" for="simulation-speed">Speed
+            <select id="simulation-speed">
+              <option value="1">1×</option>
+              <option value="2">2×</option>
+            </select>
+          </label>
+        </div>
+      </article>
+    </section>
+
+    <footer class="page-footer">
+      <span>Minimum-cost maximum-flow · Successive shortest augmenting paths</span>
+      <span id="footer-totals">13,000 supply capacity <i>·</i> 12,000 required demand</span>
+    </footer>
+  </main>
+</body>
+</html>

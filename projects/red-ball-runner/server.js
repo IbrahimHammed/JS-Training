@@ -29,9 +29,14 @@ const server = http.createServer(async (request, response) => {
   }
 
   if (request.method === "GET" && pathname === "/api/leaderboard") {
+    const speedLevel = new URL(request.url, `http://${HOST}:${PORT}`).searchParams.get("speedLevel");
+    if (!SPEED_LEVELS.has(speedLevel)) {
+      sendJson(response, 400, { error: "A valid speedLevel is required to load the leaderboard." });
+      return;
+    }
     try {
       const scores = await readScores();
-      sendJson(response, 200, rankScores(scores).slice(0, LEADERBOARD_LIMIT));
+      sendJson(response, 200, leaderboardForSpeedLevel(scores, speedLevel));
     } catch (error) {
       console.error("Could not read saved scores:", error);
       sendJson(response, 500, { error: "Saved scores could not be read." });
@@ -91,13 +96,19 @@ function appendScore(score) {
       date: new Date().toISOString(),
     });
     await writeScores(scores);
-    return rankScores(scores).slice(0, LEADERBOARD_LIMIT);
+    return leaderboardForSpeedLevel(scores, score.speedLevel);
   });
 
   // A failed write is reported to its caller but must not permanently block
   // later score submissions from reaching the serialized queue.
   scoreWriteQueue = save.catch(() => {});
   return save;
+}
+
+function leaderboardForSpeedLevel(scores, speedLevel) {
+  return rankScores(scores)
+    .filter((score) => score.speedLevel === speedLevel)
+    .slice(0, LEADERBOARD_LIMIT);
 }
 
 function rankScores(scores) {

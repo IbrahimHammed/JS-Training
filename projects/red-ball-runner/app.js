@@ -16,6 +16,7 @@ const scoreOutput = document.querySelector("#score-count");
 const caughtOutput = document.querySelector("#caught-count");
 const missedOutput = document.querySelector("#missed-count");
 const leaderboardContent = document.querySelector("#leaderboard-content");
+const leaderboardSpeedInput = document.querySelector("#leaderboard-speed");
 
 const GAME_WIDTH = 960;
 const GAME_HEIGHT = 570;
@@ -25,6 +26,7 @@ const PLAYER_BOTTOM = 31;
 const PLAYER_SPEED = 470;
 const BALL_RADIUS = 11;
 const MISS_LIMIT = 5;
+const LIFE_BALL_CHANCE = 0.12;
 const LEADERBOARD_LIMIT = 10;
 const SPEED_LEVELS = {
   slow: { label: "Slow", minimumFallSpeed: 95, fallSpeedRange: 40, spawnInterval: 1.7, spawnJitter: 0.45 },
@@ -47,6 +49,7 @@ const game = {
   keys: new Set(),
   touchDirection: 0,
 };
+let leaderboardRequestId = 0;
 
 resizeCanvas();
 window.addEventListener("resize", resizeCanvas);
@@ -74,6 +77,7 @@ window.addEventListener("blur", () => {
 
 bindMoveButton("#move-left", -1);
 bindMoveButton("#move-right", 1);
+leaderboardSpeedInput.addEventListener("change", () => loadLeaderboard());
 
 function bindMoveButton(selector, direction) {
   const button = document.querySelector(selector);
@@ -124,6 +128,8 @@ function startGame(rawName) {
   playerNameInput.setCustomValidity("");
   game.playerName = name.slice(0, 20);
   game.speedLevel = speedLevelInput.value;
+  leaderboardSpeedInput.value = game.speedLevel;
+  loadLeaderboard();
   game.playerX = (GAME_WIDTH - PLAYER_WIDTH) / 2;
   game.score = 0;
   game.caught = 0;
@@ -192,9 +198,12 @@ function updateGame(delta) {
       ball.x - BALL_RADIUS <= game.playerX + PLAYER_WIDTH;
 
     if (overlapsPlayer && ball.speed > 0) {
-      ball.speed = -1;
-      game.caught += 1;
-      game.score += 1;
+      if (ball.type === "life") {
+        game.missed = Math.max(0, game.missed - 1);
+      } else {
+        game.caught += 1;
+        game.score += 1;
+      }
       game.balls.splice(index, 1);
       updateScoreboard();
       continue;
@@ -202,7 +211,7 @@ function updateGame(delta) {
 
     if (ball.y - BALL_RADIUS > GAME_HEIGHT) {
       game.balls.splice(index, 1);
-      game.missed += 1;
+      if (ball.type !== "life") game.missed += 1;
       updateScoreboard();
       if (game.missed >= MISS_LIMIT) {
         finishGame();
@@ -214,7 +223,9 @@ function updateGame(delta) {
 
 function spawnBall() {
   const speed = SPEED_LEVELS[game.speedLevel];
+  const type = game.missed > 0 && Math.random() < LIFE_BALL_CHANCE ? "life" : "enemy";
   game.balls.push({
+    type,
     x: BALL_RADIUS + 8 + Math.random() * (GAME_WIDTH - 2 * (BALL_RADIUS + 8)),
     y: -BALL_RADIUS,
     speed: speed.minimumFallSpeed + Math.random() * speed.fallSpeedRange,
@@ -247,6 +258,7 @@ function drawBackgroundDetails() {
 }
 
 function drawBall(ball) {
+  const isLifeBall = ball.type === "life";
   const gradient = context.createRadialGradient(
     ball.x - BALL_RADIUS * 0.33,
     ball.y - BALL_RADIUS * 0.4,
@@ -255,12 +267,12 @@ function drawBall(ball) {
     ball.y,
     BALL_RADIUS * 1.35
   );
-  gradient.addColorStop(0, "#ff8c83");
-  gradient.addColorStop(ball.shine, "#f3655e");
-  gradient.addColorStop(1, "#d84142");
+  gradient.addColorStop(0, isLifeBall ? "#a8edb4" : "#ff8c83");
+  gradient.addColorStop(ball.shine, isLifeBall ? "#57bd75" : "#f3655e");
+  gradient.addColorStop(1, isLifeBall ? "#23894b" : "#d84142");
 
   context.save();
-  context.shadowColor = "rgba(220, 65, 66, .22)";
+  context.shadowColor = isLifeBall ? "rgba(57, 160, 88, .28)" : "rgba(220, 65, 66, .22)";
   context.shadowBlur = 12;
   context.shadowOffsetY = 4;
   context.beginPath();
@@ -339,12 +351,16 @@ async function finishGame() {
 }
 
 async function loadLeaderboard() {
+  const requestId = ++leaderboardRequestId;
+  const speedLevel = leaderboardSpeedInput.value;
   try {
-    const response = await fetch("/api/leaderboard");
+    const response = await fetch(`/api/leaderboard?speedLevel=${encodeURIComponent(speedLevel)}`, { cache: "no-store" });
     if (!response.ok) throw new Error(`Leaderboard request failed with status ${response.status}.`);
     const leaderboard = await response.json();
-    renderLeaderboard(leaderboard);
+    if (requestId !== leaderboardRequestId) return;
+    renderLeaderboard(leaderboard.filter((score) => score.speedLevel === speedLevel));
   } catch (error) {
+    if (requestId !== leaderboardRequestId) return;
     console.error("Leaderboard could not be loaded:", error);
     leaderboardContent.replaceChildren();
     const message = document.createElement("p");
@@ -380,7 +396,7 @@ function renderLeaderboard(scores) {
     const heading = document.createElement("strong");
     heading.textContent = "Your spot is waiting.";
     const copy = document.createElement("span");
-    copy.textContent = "Finish a game to claim a place on the leaderboard.";
+    copy.textContent = `Finish a game on ${SPEED_LEVELS[leaderboardSpeedInput.value].label.toLowerCase()} speed to claim a place.`;
     empty.append(trophy, heading, copy);
     leaderboardContent.append(empty);
     return;
@@ -392,11 +408,9 @@ function renderLeaderboard(scores) {
 
     const rank = document.createElement("span");
     rank.className = `rank-badge${index < 3 ? ` rank-${index + 1}` : ""}`;
-    rank.textContent = String(index + 1).padStart(2, "0");
-    rank.setAttribute(
-      "aria-label",
-      index === 0 ? "1st place, gold" : index === 1 ? "2nd place, silver" : index === 2 ? "3rd place, bronze" : `Place ${index + 1}`
-    );
+    const medal = ["Gold", "Silver", "Bronze"][index];
+    rank.textContent = ["🥇", "🥈", "🥉"][index] || String(index + 1).padStart(2, "0");
+    rank.setAttribute("aria-label", medal ? `${medal} medal, ${index + 1}${["st", "nd", "rd"][index]} place` : `Place ${index + 1}`);
 
     const player = document.createElement("span");
     player.className = "leader-player";
