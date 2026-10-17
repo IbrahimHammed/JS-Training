@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap");
 
+/* Light game palette: red marks enemies, green marks helpful life pickups. */
 :root {
   color-scheme: light;
   --ink: #222a34;
@@ -19,6 +20,7 @@
 
 * { box-sizing: border-box; }
 
+/* Shared page frame, brand, and introductory heading. */
 body {
   min-width: 0;
   min-height: 100vh;
@@ -71,6 +73,7 @@ h1 span { color: var(--red); }
 
 .game-layout { display: grid; grid-template-columns: minmax(0, 1fr) 270px; align-items: start; gap: 18px; padding-bottom: 35px; }
 .game-column { min-width: 0; }
+/* Game toolbar, canvas stage, and the start/end overlay. */
 .game-toolbar { height: 38px; display: flex; align-items: center; justify-content: space-between; padding: 0 3px 9px; }
 .game-label { display: flex; align-items: center; gap: 9px; color: #929aa4; font-size: 9px; letter-spacing: 1.15px; }
 .game-label strong { font-weight: 700; }
@@ -135,6 +138,7 @@ kbd { min-width: 19px; height: 19px; display: grid; place-items: center; border:
 .overlay-error { margin: 10px 0 0; color: #bc4c49; font-size: 10px; line-height: 1.5; }
 .overlay-error[hidden] { display: none; }
 
+/* Touch controls and live score/miss counters shown under the canvas. */
 .mobile-controls { display: none; }
 .score-strip { display: grid; grid-template-columns: 1fr 1fr 1fr; margin-top: 13px; padding: 13px 9px; border: 1px solid #e8eaee; border-radius: 10px; background: white; }
 .score-stat { min-width: 0; display: flex; align-items: center; justify-content: center; gap: 8px; }
@@ -153,6 +157,7 @@ kbd { min-width: 19px; height: 19px; display: grid; place-items: center; border:
 .game-footnote span { margin: 0 6px; color: #d1d5d9; }
 .game-footnote strong:last-child { color: #dc6660; }
 
+/* Leaderboard panel, including medal badges, difficulty filter, and loading/error states. */
 .panel { border: 1px solid #e7e9ed; border-radius: 11px; background: #fff; box-shadow: 0 5px 19px rgba(39, 47, 59, .035); }
 .leaderboard { overflow: hidden; }
 .leaderboard-heading { display: flex; align-items: center; justify-content: space-between; padding: 18px 17px 14px; border-bottom: 1px solid #eef0f2; }
@@ -184,6 +189,7 @@ kbd { min-width: 19px; height: 19px; display: grid; place-items: center; border:
 .leaderboard-footer .online-dot { width: 6px; height: 6px; }
 .leaderboard-error { padding: 28px 12px; color: #ac625b; font-size: 10px; line-height: 1.6; text-align: center; }
 
+/* Page footer and visually hidden labels used for assistive technology. */
 .page-footer { min-height: 53px; display: flex; align-items: center; justify-content: space-between; gap: 12px; border-top: 1px solid #e8eaed; color: #969da6; font-size: 9px; }
 .page-footer strong { color: #66717d; font-weight: 600; }
 .page-footer > span:last-child { font-size: 8px; font-weight: 700; letter-spacing: 1px; }
@@ -191,6 +197,7 @@ kbd { min-width: 19px; height: 19px; display: grid; place-items: center; border:
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
 :focus-visible { outline: 3px solid rgba(237, 90, 87, .45); outline-offset: 3px; }
 
+/* Tablet keeps the game and leaderboard side by side at reduced widths. */
 @media (max-width: 800px) {
   .game-shell { width: min(100% - 40px, 680px); }
   .game-layout { grid-template-columns: minmax(0, 1fr) 220px; gap: 13px; }
@@ -200,6 +207,7 @@ kbd { min-width: 19px; height: 19px; display: grid; place-items: center; border:
   .leader-row { grid-template-columns: 44px minmax(0,1fr) auto; gap: 7px; }
 }
 
+/* Phone layout stacks panels and reveals the on-screen paddle controls. */
 @media (max-width: 620px) {
   .game-shell { width: min(100% - 30px, 480px); }
   .topbar { height: 68px; }
@@ -246,6 +254,7 @@ kbd { min-width: 19px; height: 19px; display: grid; place-items: center; border:
   .leader-row { grid-template-columns: 44px minmax(0,1fr) auto; }
 }
 
+/* Respect the operating system's request to minimize motion. */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }

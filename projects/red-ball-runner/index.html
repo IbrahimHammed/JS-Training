@@ -11,6 +11,7 @@
 </head>
 <body>
   <main class="game-shell">
+    <!-- Game identity and local leaderboard status. -->
     <header class="topbar">
       <a class="brand" href="./" aria-label="Red Ball Run home">
         <span class="brand-mark" aria-hidden="true">R</span>
@@ -19,18 +20,21 @@
       <span class="top-note"><span class="online-dot"></span> Local leaderboard</span>
     </header>
 
+    <!-- Short instructions and title introduce the keyboard/touch catching game. -->
     <section class="intro">
       <div class="eyebrow"><span></span> READY, SET, CATCH</div>
       <h1>Keep your eye<br class="mobile-break"> on the <span>ball.</span></h1>
       <p>Move left and right. Catch the red balls. Try not to let five slip by.</p>
     </section>
 
+    <!-- Main playfield and difficulty-specific leaderboard share the responsive layout. -->
     <section class="game-layout" aria-label="Red Ball Run game">
       <div class="game-column">
         <div class="game-toolbar">
           <div class="game-label"><span class="live-dot" id="game-live-dot"></span><strong id="game-state">READY TO PLAY</strong></div>
           <div class="toolbar-hint"><kbd>←</kbd><kbd>→</kbd><span>to move</span></div>
         </div>
+        <!-- Canvas is the game renderer; the overlay collects player identity and speed. -->
         <div class="game-stage">
           <canvas id="game-canvas" aria-label="Game area. Catch the falling red balls with your paddle."></canvas>
           <div class="game-overlay" id="game-overlay">
@@ -54,11 +58,13 @@
             </div>
           </div>
         </div>
+        <!-- Pointer-driven controls supplement the keyboard on touch devices. -->
         <div class="mobile-controls" aria-label="Touch controls">
           <button class="move-button" id="move-left" type="button" aria-label="Move left">←</button>
           <span>MOVE YOUR PADDLE</span>
           <button class="move-button" id="move-right" type="button" aria-label="Move right">→</button>
         </div>
+        <!-- Live counters mirror the game state maintained in app.js. -->
         <div class="score-strip">
           <div class="score-stat"><span class="stat-icon catch-icon" aria-hidden="true">↓</span><span><small>CAUGHT</small><strong id="caught-count">0</strong></span></div>
           <div class="score-stat main-score"><span class="stat-icon score-icon" aria-hidden="true">✳</span><span><small>YOUR SCORE</small><strong id="score-count">0</strong></span></div>
@@ -67,6 +73,7 @@
         <p class="game-footnote">Each catch <strong>+1 point</strong> <span>·</span> Misses use one of your <strong>5 lives</strong></p>
       </div>
 
+      <!-- Scores are filtered to the selected difficulty and refreshed after a run. -->
       <aside class="leaderboard panel" aria-labelledby="leaderboard-title">
         <div class="leaderboard-heading">
           <div><span class="panel-eyebrow">THE TOP CATCHERS</span><h2 id="leaderboard-title">Leaderboard</h2></div>

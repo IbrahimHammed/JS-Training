@@ -18,6 +18,7 @@ const missedOutput = document.querySelector("#missed-count");
 const leaderboardContent = document.querySelector("#leaderboard-content");
 const leaderboardSpeedInput = document.querySelector("#leaderboard-speed");
 
+// Canvas coordinates are fixed; resizeCanvas scales drawing to the visible canvas.
 const GAME_WIDTH = 960;
 const GAME_HEIGHT = 570;
 const PLAYER_WIDTH = 112;
@@ -28,6 +29,7 @@ const BALL_RADIUS = 11;
 const MISS_LIMIT = 5;
 const LIFE_BALL_CHANCE = 0.12;
 const LEADERBOARD_LIMIT = 10;
+// Each speed profile controls both how quickly balls fall and how frequently they appear.
 const SPEED_LEVELS = {
   slow: { label: "Slow", minimumFallSpeed: 95, fallSpeedRange: 40, spawnInterval: 1.7, spawnJitter: 0.45 },
   medium: { label: "Medium", minimumFallSpeed: 155, fallSpeedRange: 55, spawnInterval: 1.15, spawnJitter: 0.35 },
@@ -51,6 +53,7 @@ const game = {
 };
 let leaderboardRequestId = 0;
 
+// Draw the ready state immediately and load scores independently from game startup.
 resizeCanvas();
 window.addEventListener("resize", resizeCanvas);
 drawGame();
@@ -70,6 +73,7 @@ window.addEventListener("keydown", (event) => {
 
 window.addEventListener("keyup", (event) => game.keys.delete(event.key));
 window.addEventListener("blur", () => {
+  // Clear held inputs when focus leaves the page so movement cannot get stuck.
   game.keys.clear();
   game.touchDirection = 0;
   document.querySelectorAll(".move-button").forEach((button) => button.classList.remove("is-pressed"));
@@ -81,6 +85,7 @@ leaderboardSpeedInput.addEventListener("change", () => loadLeaderboard());
 
 function bindMoveButton(selector, direction) {
   const button = document.querySelector(selector);
+  // Pointer capture keeps touch movement active even if a finger drifts off its button.
   const stopMoving = (event) => {
     event.preventDefault();
     if (game.touchDirection === direction) game.touchDirection = 0;
@@ -104,6 +109,7 @@ function resizeCanvas() {
   const bounds = canvas.getBoundingClientRect();
   if (!bounds.width || !bounds.height) return;
   const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+  // Cap the backing resolution to avoid excessive work on high-density displays.
   canvas.width = Math.round(bounds.width * pixelRatio);
   canvas.height = Math.round(bounds.height * pixelRatio);
   context.setTransform(
@@ -128,6 +134,7 @@ function startGame(rawName) {
   playerNameInput.setCustomValidity("");
   game.playerName = name.slice(0, 20);
   game.speedLevel = speedLevelInput.value;
+  // Keep the leaderboard aligned with the difficulty selected for this run.
   leaderboardSpeedInput.value = game.speedLevel;
   loadLeaderboard();
   game.playerX = (GAME_WIDTH - PLAYER_WIDTH) / 2;
@@ -171,6 +178,7 @@ function gameLoop(timestamp) {
   }
 }
 
+// Advance the paddle and every ball, resolve catches, and apply the miss limit.
 function updateGame(delta) {
   const movingLeft = game.keys.has("ArrowLeft") || game.touchDirection < 0;
   const movingRight = game.keys.has("ArrowRight") || game.touchDirection > 0;
@@ -198,6 +206,7 @@ function updateGame(delta) {
       ball.x - BALL_RADIUS <= game.playerX + PLAYER_WIDTH;
 
     if (overlapsPlayer && ball.speed > 0) {
+      // Green life balls undo one existing miss; normal red balls score a catch.
       if (ball.type === "life") {
         game.missed = Math.max(0, game.missed - 1);
       } else {
@@ -211,6 +220,7 @@ function updateGame(delta) {
 
     if (ball.y - BALL_RADIUS > GAME_HEIGHT) {
       game.balls.splice(index, 1);
+      // Missing a life pickup has no penalty; missing a red ball costs a life.
       if (ball.type !== "life") game.missed += 1;
       updateScoreboard();
       if (game.missed >= MISS_LIMIT) {
@@ -223,6 +233,8 @@ function updateGame(delta) {
 
 function spawnBall() {
   const speed = SPEED_LEVELS[game.speedLevel];
+  // Life pickups can appear after the player has lost a life, giving them a chance
+  // to recover without letting a pickup raise them above the initial five lives.
   const type = game.missed > 0 && Math.random() < LIFE_BALL_CHANCE ? "life" : "enemy";
   game.balls.push({
     type,
@@ -243,6 +255,7 @@ function drawGame() {
   drawPlayer();
 }
 
+// A subtle dot grid gives the playfield texture without obscuring moving balls.
 function drawBackgroundDetails() {
   context.fillStyle = "#f3f5f7";
   for (let x = 28; x < GAME_WIDTH; x += 32) {
@@ -258,6 +271,7 @@ function drawBackgroundDetails() {
 }
 
 function drawBall(ball) {
+  // The same shading is used for both ball types; only the palette and glow change.
   const isLifeBall = ball.type === "life";
   const gradient = context.createRadialGradient(
     ball.x - BALL_RADIUS * 0.33,
@@ -303,6 +317,7 @@ function drawPlayer() {
   context.fill();
 }
 
+// Draw rounded UI-like paddle geometry using the canvas roundedRect primitive.
 function roundedRect(target, x, y, width, height, radius) {
   target.beginPath();
   target.roundRect(x, y, width, height, radius);
@@ -333,6 +348,7 @@ async function finishGame() {
 
   playButton.disabled = true;
   try {
+    // Persist only completed runs, then refresh the selected difficulty leaderboard.
     await saveScore({
       name: game.playerName,
       score: game.caught,
@@ -357,6 +373,7 @@ async function loadLeaderboard() {
     const response = await fetch(`/api/leaderboard?speedLevel=${encodeURIComponent(speedLevel)}`, { cache: "no-store" });
     if (!response.ok) throw new Error(`Leaderboard request failed with status ${response.status}.`);
     const leaderboard = await response.json();
+    // Ignore stale responses if the player changed difficulty while this request was in flight.
     if (requestId !== leaderboardRequestId) return;
     renderLeaderboard(leaderboard.filter((score) => score.speedLevel === speedLevel));
   } catch (error) {
@@ -383,6 +400,7 @@ async function saveScore(score) {
   return response.json();
 }
 
+// Build rows with textContent so player names and server data are treated as text.
 function renderLeaderboard(scores) {
   leaderboardContent.replaceChildren();
 
@@ -408,6 +426,7 @@ function renderLeaderboard(scores) {
 
     const rank = document.createElement("span");
     rank.className = `rank-badge${index < 3 ? ` rank-${index + 1}` : ""}`;
+    // Medal icons identify the podium; later places keep their padded numeric rank.
     const medal = ["Gold", "Silver", "Bronze"][index];
     rank.textContent = ["🥇", "🥈", "🥉"][index] || String(index + 1).padStart(2, "0");
     rank.setAttribute("aria-label", medal ? `${medal} medal, ${index + 1}${["st", "nd", "rd"][index]} place` : `Place ${index + 1}`);
@@ -431,6 +450,7 @@ function renderLeaderboard(scores) {
   });
 }
 
+// Invalid or absent timestamps should not prevent a score row from rendering.
 function formatDate(value) {
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return "Just played";

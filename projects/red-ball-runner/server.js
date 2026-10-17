@@ -7,11 +7,14 @@ const HOST = "127.0.0.1";
 const PORT = Number(process.env.PORT) || 3001;
 const ROOT = __dirname;
 const SCORE_FILE = path.join(ROOT, "data", "scores.json");
+// Bound request bodies and response sizes so local storage/API work stays predictable.
 const MAX_REQUEST_BYTES = 4096;
 const LEADERBOARD_LIMIT = 10;
 const SPEED_LEVELS = new Set(["slow", "medium", "fast"]);
+// Serialize read-modify-write cycles so concurrent score submissions are not lost.
 let scoreWriteQueue = Promise.resolve();
 
+// Only the MIME types used by the static app are listed; unknown files are served as binary.
 const contentTypes = {
   ".css": "text/css; charset=utf-8",
   ".html": "text/html; charset=utf-8",
@@ -29,6 +32,7 @@ const server = http.createServer(async (request, response) => {
   }
 
   if (request.method === "GET" && pathname === "/api/leaderboard") {
+    // Rankings are difficulty-specific so scores from different game speeds are comparable.
     const speedLevel = new URL(request.url, `http://${HOST}:${PORT}`).searchParams.get("speedLevel");
     if (!SPEED_LEVELS.has(speedLevel)) {
       sendJson(response, 400, { error: "A valid speedLevel is required to load the leaderboard." });
@@ -68,6 +72,7 @@ const server = http.createServer(async (request, response) => {
   serveStaticFile(pathname, response, request.method === "HEAD");
 });
 
+// Missing score storage is the only read error treated as an empty leaderboard.
 async function readScores() {
   try {
     const content = await fs.promises.readFile(SCORE_FILE, "utf8");
@@ -80,6 +85,7 @@ async function readScores() {
   }
 }
 
+// Replace the data file atomically so interrupted writes cannot leave malformed JSON.
 async function writeScores(scores) {
   await fs.promises.mkdir(path.dirname(SCORE_FILE), { recursive: true });
   const temporaryFile = `${SCORE_FILE}.${process.pid}.tmp`;
@@ -105,12 +111,14 @@ function appendScore(score) {
   return save;
 }
 
+// Filter after sorting so each difficulty gets an independent top-ten ranking.
 function leaderboardForSpeedLevel(scores, speedLevel) {
   return rankScores(scores)
     .filter((score) => score.speedLevel === speedLevel)
     .slice(0, LEADERBOARD_LIMIT);
 }
 
+// Normalize legacy records and establish deterministic tie-breakers.
 function rankScores(scores) {
   return scores
     .map((score) => ({
@@ -132,6 +140,8 @@ function scoreForRanking(score) {
   return Number.isSafeInteger(score.caught) ? score.caught : score.score;
 }
 
+// Parse the bounded request body and validate every persisted field on the server;
+// client-side form validation is not treated as a trust boundary.
 function readScoreRequest(request) {
   return new Promise((resolve, reject) => {
     let body = "";
@@ -140,6 +150,7 @@ function readScoreRequest(request) {
       if (tooLarge) return;
       body += chunk;
       if (Buffer.byteLength(body) > MAX_REQUEST_BYTES) {
+        // Stop buffering once oversized; reject after the stream finishes.
         tooLarge = true;
         body = "";
       }
@@ -191,6 +202,7 @@ function readScoreRequest(request) {
   });
 }
 
+// Serve only paths contained within the project directory to prevent traversal.
 function serveStaticFile(pathname, response, isHeadRequest) {
   let decodedPath;
   try {
@@ -225,6 +237,7 @@ function serveStaticFile(pathname, response, isHeadRequest) {
   });
 }
 
+// API responses are never cached so score updates and selected filters stay current.
 function sendJson(response, status, data) {
   response.writeHead(status, {
     "Content-Type": "application/json; charset=utf-8",
@@ -241,6 +254,7 @@ class RequestError extends Error {
   }
 }
 
+// Bind to loopback only: this app is a local game, not a public-facing service.
 server.listen(PORT, HOST, () => {
   console.log(`Red Ball Run is available at http://${HOST}:${PORT}`);
 });

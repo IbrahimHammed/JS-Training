@@ -11,6 +11,7 @@
 </head>
 <body>
   <main class="app-shell">
+    <!-- Brand and model label establish this page as an interactive OR demo. -->
     <header class="topbar">
       <a class="brand" href="./" aria-label="Freight Flow home">
         <span class="brand-mark" aria-hidden="true">F</span>
@@ -19,12 +20,14 @@
       <div class="top-status"><span class="status-dot"></span> TRANS-SHIPMENT LAB <span class="top-divider">/</span> MODEL 01</div>
     </header>
 
+    <!-- Briefly explain the network before presenting its calculated plan. -->
     <section class="intro">
       <div class="eyebrow"><span></span> OPERATIONS RESEARCH · LIVE SIMULATION</div>
       <h1>Every unit. <span>Every route.</span><br class="mobile-break"> Optimized.</h1>
       <p>Three factories. Two transfer hubs. Three markets. Watch the minimum-cost flow find its way.</p>
     </section>
 
+    <!-- Optimizer outputs: maximum flow, minimum cost, unused supply, and live progress. -->
     <section class="summary-grid" aria-label="Optimized plan summary">
       <article class="metric-card">
         <span class="metric-label">TOTAL DELIVERED</span>
@@ -49,6 +52,7 @@
       </article>
     </section>
 
+    <!-- Shown only when aggregate demand exceeds factory capacity. -->
     <aside id="shortfall-notice" class="shortfall-notice" role="status" aria-live="polite" hidden>
       <span class="shortfall-mascot" aria-hidden="true">
         <svg viewBox="0 0 52 44" fill="none">
@@ -69,6 +73,7 @@
       <span class="shortfall-badge"><span id="shortfall-amount">0</span> units short</span>
     </aside>
 
+    <!-- Users enter all supply and demand values, then explicitly recalculate the plan. -->
     <section class="setup-panel" aria-labelledby="setup-title">
       <div class="panel-heading compact-heading">
         <div><span class="panel-overline">NETWORK INPUTS</span><h2 id="setup-title">Set capacity & demand</h2></div>
@@ -94,6 +99,7 @@
       </form>
     </section>
 
+    <!-- SVG layers are separated so routes, labels, moving packets, and nodes can be updated independently. -->
     <section class="network-panel" aria-labelledby="network-title">
       <div class="panel-heading">
         <div>
@@ -123,6 +129,7 @@
       </div>
     </section>
 
+    <!-- Reference route costs and simulation controls sit below the network visualization. -->
     <section class="lower-grid">
       <article class="route-panel">
         <div class="panel-heading compact-heading">

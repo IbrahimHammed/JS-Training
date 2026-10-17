@@ -1,8 +1,10 @@
 const NS = "http://www.w3.org/2000/svg";
+// Shipments are animated in batches so the network stays legible at large volumes.
 const BATCH_SIZE = 500;
 const LEG_DURATION = 900;
 const LAUNCH_GAP = 165;
 
+// Node coordinates belong to the SVG viewBox; colors also identify each supply stream.
 const factories = [
   { id: "A", name: "Factory A", capacity: 1000, x: 150, y: 120, color: "#42d9e8" },
   { id: "B", name: "Factory B", capacity: 5000, x: 150, y: 300, color: "#ffba62" },
@@ -18,6 +20,7 @@ const markets = [
   { id: "Z", name: "Market Z", demand: 5000, x: 1050, y: 480 },
 ];
 
+// Route rates are cost per unit. The optimizer minimizes the sum across both legs.
 const factoryHubCosts = {
   A: { "1": 4, "2": 6 },
   B: { "1": 5, "2": 3 },
@@ -41,12 +44,15 @@ let plannedFlow = 0;
 let totalDemandUnits = 0;
 let totalSupplyUnits = 0;
 
+// Create SVG nodes through the namespace API; HTML element creation does not work inside SVG.
 function svgElement(name, attributes = {}) {
   const element = document.createElementNS(NS, name);
   for (const [key, value] of Object.entries(attributes)) element.setAttribute(key, value);
   return element;
 }
 
+// Residual edges let the optimizer undo and reroute earlier choices when a cheaper
+// combination is found. Their negative cost is the reverse of the forward edge cost.
 function addEdge(graph, from, to, capacity, cost, metadata = null) {
   const forward = { to, reverse: graph[to].length, capacity, cost, initialCapacity: capacity, metadata };
   const reverse = { to: from, reverse: graph[from].length, capacity: 0, cost: -cost, initialCapacity: 0, metadata: null };
@@ -55,6 +61,8 @@ function addEdge(graph, from, to, capacity, cost, metadata = null) {
   return forward;
 }
 
+// Successive shortest augmenting paths, using node potentials so Dijkstra can
+// safely handle reverse residual edges after the first augmentation.
 function minCostMaxFlow(graph, source, sink, targetFlow) {
   const potentials = Array(graph.length).fill(0);
   let flow = 0;
@@ -67,6 +75,7 @@ function minCostMaxFlow(graph, source, sink, targetFlow) {
     const visited = Array(graph.length).fill(false);
     distances[source] = 0;
 
+    // Dijkstra on reduced costs; previousNode/previousEdge reconstruct the cheapest path.
     for (let pass = 0; pass < graph.length; pass++) {
       let node = -1;
       for (let candidate = 0; candidate < graph.length; candidate++) {
@@ -86,10 +95,12 @@ function minCostMaxFlow(graph, source, sink, targetFlow) {
     }
 
     if (previousNode[sink] === -1) break;
+    // Update potentials to keep reachable residual-edge costs non-negative.
     for (let node = 0; node < graph.length; node++) {
       if (distances[node] < Infinity) potentials[node] += distances[node];
     }
 
+    // Augment by the bottleneck capacity of the chosen path, not one unit at a time.
     let amount = targetFlow - flow;
     for (let node = sink; node !== source; node = previousNode[node]) {
       amount = Math.min(amount, graph[previousNode[node]][previousEdge[node]].capacity);
@@ -105,9 +116,14 @@ function minCostMaxFlow(graph, source, sink, targetFlow) {
   return { flow, cost };
 }
 
+// Convert factories, transfer hubs, and markets to a flow network. Source edges
+// encode factory capacities, market-to-sink edges encode demands, and route edges
+// carry the assigned per-unit costs.
 function calculatePlan() {
   totalSupplyUnits = factories.reduce((sum, factory) => sum + factory.capacity, 0);
   totalDemandUnits = markets.reduce((sum, market) => sum + market.demand, 0);
+  // The goal is maximum deliverable volume; min-cost flow chooses the cheapest
+  // routing for that volume, including when supply and demand are unbalanced.
   const targetFlow = Math.min(totalSupplyUnits, totalDemandUnits);
   const names = ["source", ...factories.map((factory) => `factory-${factory.id}`),
     ...hubs.map((hub) => `hub-${hub.id}`), ...markets.map((market) => `market-${market.id}`), "sink"];
@@ -131,10 +147,12 @@ function calculatePlan() {
   markets.forEach((market) => addEdge(graph, indexes.get(`market-${market.id}`), sink, market.demand, 0));
 
   const result = minCostMaxFlow(graph, source, sink, targetFlow);
+  // A forward edge's used capacity is its initial capacity minus residual capacity.
   const flows = new Map([...routeEdges].map(([key, edge]) => [key, edge.initialCapacity - edge.capacity]));
   return { ...result, flows };
 }
 
+// Route paths stop at the edges of the node cards and use a cubic curve between columns.
 function pathForRoute(from, to, side) {
   const startX = side === "factory-hub" ? 260 : 700;
   const endX = side === "factory-hub" ? 500 : 940;
@@ -148,6 +166,8 @@ function midpoint(path) {
   return probe.getPointAtLength(probe.getTotalLength() / 2);
 }
 
+// Draw every possible connection, including unused routes, so the viewer can
+// compare the chosen plan with the alternatives and their unit costs.
 function renderRoutes(flows) {
   routeLayer.replaceChildren();
   labelLayer.replaceChildren();
@@ -183,6 +203,7 @@ function addRoute(key, path, unitCost, flow, color, offset) {
   routeElements.set(key, route);
 
   const point = midpoint(path);
+  // Hand-tuned offsets keep labels from colliding where several paths cross.
   const labelOffsets = {
     "fA-h1": -6, "fA-h2": 12, "fB-h1": -12, "fB-h2": 8, "fC-h1": -12, "fC-h2": 8,
     "h1-mX": 0, "h1-mY": -10, "h1-mZ": -10, "h2-mX": 10, "h2-mY": 10, "h2-mZ": 10,
@@ -197,11 +218,13 @@ function addRoute(key, path, unitCost, flow, color, offset) {
   labelLayer.append(group);
 }
 
+// Compact counts keep the SVG node notes and route labels readable at a glance.
 function compactNumber(number) {
   if (number >= 1000) return `${(number / 1000).toFixed(number % 1000 === 0 ? 0 : 1)}k`;
   return String(number);
 }
 
+// Nodes get different detail lines according to their role in the network.
 function renderNodes() {
   nodeLayer.replaceChildren();
   nodeElements.clear();
@@ -241,6 +264,9 @@ function addNode(node, kind, typeText) {
   updateNodeDetails(node.id);
 }
 
+// Turn the optimizer's two independent leg-flow tables into complete
+// factory → hub → market paths. The greedy matching conserves each hub's
+// inbound and outbound quantity because both totals are equal.
 function makeShipments(flows) {
   const inbound = new Map(hubs.map((hub) => [hub.id, factories.map((factory) => ({
     factory, amount: flows.get(`f${factory.id}-h${hub.id}`) || 0,
@@ -268,6 +294,7 @@ function makeShipments(flows) {
   });
 
   const batches = [];
+  // Scale the batch size with the total plan to avoid creating thousands of SVG packets.
   const batchSize = Math.max(BATCH_SIZE, Math.ceil(Math.min(totalSupplyUnits, totalDemandUnits) / 500));
   shipments.forEach((shipment) => {
     let remaining = shipment.amount;
@@ -280,11 +307,14 @@ function makeShipments(flows) {
   return batches;
 }
 
+// Each animated path records its own cumulative traffic; node notes read from
+// these route totals so sources and destinations remain visible separately.
 function updateNodeFlow(nodeId, text) {
   const element = nodeElements.get(nodeId);
   if (element) element.flow.textContent = text;
 }
 
+// A packet uses its originating factory's color throughout both route legs.
 function createPacket(shipment) {
   const group = svgElement("g", { class: "packet", opacity: 0, "aria-hidden": "true" });
   group.style.color = shipment.factory.color;
@@ -296,6 +326,7 @@ function createPacket(shipment) {
   return group;
 }
 
+// Rebuild packet elements and per-run counters after a new plan or reset.
 function prepareAnimation() {
   packetLayer.replaceChildren();
   animation.shipments = planShipments.map((shipment) => ({
@@ -343,6 +374,8 @@ function recordLegDelivery(shipment, legIndex) {
   updateNodeDetails(shipment.hub.id);
 }
 
+// Render the route-specific inbound/outbound amounts for this node from the
+// cumulative route ledger. Values are compacted for the fixed-size SVG cards.
 function updateNodeDetails(nodeId) {
   const entry = nodeElements.get(nodeId);
   if (!entry) return;
@@ -358,6 +391,8 @@ function updateNodeDetails(nodeId) {
   }
 }
 
+// Keep the progress bar relative to the amount the optimizer can actually ship,
+// while the status still reports any demand that could not be fulfilled.
 function updateProgress() {
   document.querySelector("#metric-progress").textContent = animation.delivered.toLocaleString();
   const progressPercent = plannedFlow ? (animation.delivered / plannedFlow) * 100 : 0;
@@ -377,6 +412,8 @@ function updateProgress() {
   if (animation.running) document.querySelector("#run-status").textContent = "Shipments in transit";
 }
 
+// Advance every batch along its two SVG paths. Both legs take the same duration;
+// a leg's quantity is recorded once as the packet reaches the next node.
 function animationFrame(timestamp) {
   if (!animation.running) return;
   if (!animation.previousTime) animation.previousTime = timestamp;
@@ -424,6 +461,8 @@ function animationFrame(timestamp) {
   animation.frame = requestAnimationFrame(animationFrame);
 }
 
+// The button label reflects the simulation's current state and cannot start
+// a run when the optimized plan contains no shippable units.
 function setPlayButton(isRunning) {
   const button = document.querySelector("#play-button");
   button.disabled = !isRunning && plannedFlow === 0;
@@ -438,6 +477,7 @@ function setPlayButton(isRunning) {
   }
 }
 
+// Resume from the current elapsed time, or prepare a fresh replay after completion.
 function startAnimation() {
   if (plannedFlow === 0) return;
   if (animation.delivered >= plannedFlow) prepareAnimation();
@@ -463,6 +503,7 @@ function resetAnimation() {
   setPlayButton(false);
 }
 
+// Show the fixed per-unit cost matrix alongside the dynamically optimized flows.
 function renderRates() {
   const factoryContainer = document.querySelector("#factory-rates");
   const marketContainer = document.querySelector("#market-rates");
@@ -487,6 +528,8 @@ function addRate(container, route, rate) {
   container.append(row);
 }
 
+// Update all summary values and toggle the animated notice when demand exceeds
+// aggregate factory capacity.
 function updateSummary(plan) {
   plannedFlow = plan.flow;
   const shortfall = Math.max(0, totalDemandUnits - totalSupplyUnits);
@@ -510,6 +553,8 @@ function updateSummary(plan) {
   }
 }
 
+// Read and validate all six inputs together, then atomically replace the active
+// plan, its route rendering, and its reset animation state.
 function applyNetworkInputs(event) {
   event.preventDefault();
   const setupForm = document.querySelector("#network-setup");
@@ -548,6 +593,8 @@ function applyNetworkInputs(event) {
   message.classList.remove("is-error");
 }
 
+// Set up the default scenario once, then wire controls without auto-starting
+// so users can inspect or edit the plan before dispatch.
 function initialize() {
   document.querySelector("#network-setup").addEventListener("submit", applyNetworkInputs);
   const plan = calculatePlan();
