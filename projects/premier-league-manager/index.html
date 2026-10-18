@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- The page is dependency-light: local data and app scripts enhance this HTML after parsing. -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f7f6">
+  <meta name="description" content="A fixture scheduling and results workspace with a live-calculated English Premier League table.">
+  <title>Touchline — Premier League desk</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="data.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <!-- Persistent navigation and season branding sit beside the responsive workspace. -->
+    <aside class="sidebar">
+      <a class="brand" href="#overview" aria-label="Touchline home">
+        <span class="brand-mark" aria-hidden="true">t.</span>
+        <span><strong>touchline</strong><small>LEAGUE DESK</small></span>
+      </a>
+      <div class="side-label">SEASON WORKSPACE</div>
+      <nav class="side-nav" aria-label="League workspace">
+        <a class="side-link active" href="#overview"><span>▦</span>Overview</a>
+        <a class="side-link" href="#standings"><span>☷</span>League table</a>
+        <a class="side-link" href="#fixtures"><span>◷</span>Fixtures & results</a>
+      </nav>
+      <div class="sidebar-note">
+        <span class="note-ball">◉</span>
+        <strong>Your football office</strong>
+        <p>Keep the schedule moving. The table takes care of itself.</p>
+      </div>
+      <div class="sidebar-bottom">
+        <span class="profile-badge">TD</span>
+        <span><strong>League admin</strong><small>Local workspace</small></span>
+        <span class="profile-more">···</span>
+      </div>
+    </aside>
+
+    <main class="main-content" id="overview">
+      <!-- Global status, demo context, and computed season summary. -->
+      <header class="topbar">
+        <div class="breadcrumbs"><span>Workspace</span><b>/</b><strong>Premier League</strong></div>
+        <div class="topbar-right"><span class="save-status"><i></i><span id="save-status">Saved in this browser</span></span><span class="season-pill">2026 / 27</span></div>
+      </header>
+
+      <section class="hero">
+        <div class="hero-copy">
+          <div class="eyebrow"><i></i> ENGLISH PREMIER LEAGUE <span>·</span> 2026 / 27</div>
+          <h1>The beautiful <span>game,</span><br class="desktop-break"> beautifully organised.</h1>
+          <p>Fixtures, results and the race for the top — all in one place.</p>
+          <div class="demo-note"><span>✦</span> DEMO SCHEDULE & SCORES — edit any match to make it yours</div>
+        </div>
+        <div class="hero-decoration" aria-hidden="true">
+          <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+          <div class="hero-ball"><span>✦</span></div>
+          <div class="hero-chip chip-top"><i></i> MATCHDAY <b id="hero-matchweek">08</b></div>
+          <div class="hero-chip chip-bottom"><span>↗</span> LIVE TABLE</div>
+        </div>
+      </section>
+
+      <section class="metric-grid" aria-label="Season summary">
+        <article class="metric-card">
+          <span class="metric-icon green">▤</span><span class="metric-label">MATCHES PLAYED</span>
+          <strong id="matches-played">—</strong><small id="matches-total">of 380 fixtures</small>
+          <div class="metric-track"><i id="played-progress"></i></div>
+        </article>
+        <article class="metric-card">
+          <span class="metric-icon amber">⚽</span><span class="metric-label">GOALS SCORED</span>
+          <strong id="goals-scored">—</strong><small id="goals-average">0.0 per match</small>
+          <div class="metric-spark"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        </article>
+        <article class="metric-card leader-card">
+          <span class="metric-icon blue">♛</span><span class="metric-label">AT THE SUMMIT</span>
+          <strong id="league-leader">—</strong><small id="leader-points">0 points · after 0 matches</small>
+          <div class="leader-foot"><span class="live-dot"></span> THE RACE IS ON</div>
+        </article>
+        <button class="schedule-cta" id="schedule-match" type="button">
+          <span class="cta-plus">+</span><span><strong>Schedule a match</strong><small>Add a fixture or record a result</small></span><span class="cta-arrow">↗</span>
+        </button>
+      </section>
+
+      <!-- Standings and match centre share one fixture model maintained by app.js. -->
+      <section class="main-grid">
+        <article class="panel table-panel" id="standings">
+          <div class="panel-heading">
+            <div><span class="section-kicker"><i></i> THE RACE FOR GLORY</span><h2>Premier League table</h2></div>
+            <div class="table-heading-actions">
+              <span class="table-update"><span class="live-dot"></span> Live standings</span>
+              <button class="crest-upload-button" id="crest-upload-button" type="button" title="Choose team image files named with the club ID, such as ars.png"><span aria-hidden="true">＋</span> Add team logos</button>
+            </div>
+          </div>
+          <!-- The table can scroll horizontally on narrow screens without widening the page. -->
+          <div class="table-scroll">
+            <table class="league-table">
+              <thead><tr>
+                <th class="position-col">#</th><th class="club-col">CLUB</th><th>PL</th><th>W</th><th>D</th><th>L</th><th class="goals-col">GF</th><th class="goals-col">GA</th><th>GD</th><th class="points-col">PTS</th><th class="form-col">FORM</th>
+              </tr></thead>
+              <tbody id="league-table-body"></tbody>
+            </table>
+          </div>
+          <div class="table-legend"><span><i class="legend-cl"></i> Champions League places</span><span><i class="legend-relegation"></i> Relegation zone</span></div>
+          <div class="table-footnote">Ranked by points, goal difference, then goals scored</div>
+        </article>
+
+        <article class="panel fixtures-panel" id="fixtures">
+          <div class="panel-heading fixture-heading">
+            <div><span class="section-kicker"><i></i> THE MATCH CENTRE</span><h2>Fixtures & results</h2></div>
+            <button class="round-button" id="schedule-match-small" type="button" aria-label="Schedule a match">+</button>
+          </div>
+          <!-- Filters and pagination are populated/updated by the application script. -->
+          <div class="fixture-controls">
+            <label class="select-wrap"><span class="sr-only">Filter by matchweek</span><select id="week-filter"><option value="all">All matchweeks</option></select><span>⌄</span></label>
+            <label class="select-wrap"><span class="sr-only">Filter by club</span><select id="team-filter"><option value="all">All clubs</option></select><span>⌄</span></label>
+            <label class="select-wrap status-select"><span class="sr-only">Filter by status</span><select id="status-filter"><option value="all">All matches</option><option value="upcoming">Scheduled</option><option value="played">Results</option></select><span>⌄</span></label>
+          </div>
+          <div class="fixture-list" id="fixture-list"></div>
+          <div class="fixture-pagination"><span id="fixture-count">—</span><div><button id="previous-page" type="button" aria-label="Previous fixtures" disabled>←</button><span id="page-indicator">1 / 1</span><button id="next-page" type="button" aria-label="Next fixtures" disabled>→</button></div></div>
+        </article>
+      </section>
+
+      <footer class="page-footer"><span>TOUCHLINE <i>·</i> A LOCAL LEAGUE MANAGEMENT DESK</span><span>Independent demo <i>·</i> Custom illustrated badges, not official club crests.</span></footer>
+      <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+    </main>
+  </div>
+
+  <!-- Team image files are selected locally and saved only in this browser. -->
+  <input id="crest-file-input" class="sr-only" type="file" accept="image/png,image/jpeg,image/webp" multiple aria-label="Choose licensed club logo images">
+
+  <!-- One native dialog serves both new-fixture and edit-result workflows. -->
+  <dialog class="match-dialog" id="match-dialog" aria-labelledby="dialog-title">
+    <form id="match-form">
+      <div class="dialog-head"><div><span class="section-kicker"><i></i> MATCH MANAGEMENT</span><h2 id="dialog-title">Schedule a match</h2></div><button type="button" class="dialog-close" id="close-dialog" aria-label="Close">×</button></div>
+      <input type="hidden" id="match-id">
+      <div class="form-grid">
+        <label>Matchweek<select id="match-week" required></select></label>
+        <label>Kick-off date<input id="match-date" type="date" required></label>
+        <label>Kick-off time<input id="match-time" type="time" required></label>
+        <label>Home club<select id="home-team" required></select></label>
+        <label class="away-field">Away club<select id="away-team" required></select></label>
+        <label class="venue-field">Venue<input id="match-venue" maxlength="70" placeholder="Home ground"></label>
+      </div>
+      <fieldset class="score-fieldset"><legend>Full-time score <span>Leave both blank if not played</span></legend>
+        <label><span id="home-score-label">Home</span><input id="home-score" type="number" min="0" max="99" inputmode="numeric" placeholder="–"></label>
+        <b>:</b>
+        <label><span id="away-score-label">Away</span><input id="away-score" type="number" min="0" max="99" inputmode="numeric" placeholder="–"></label>
+      </fieldset>
+      <p class="form-error" id="form-error" role="alert" hidden></p>
+      <div class="dialog-actions"><button class="delete-button" id="delete-match" type="button" hidden>Delete fixture</button><span class="action-spacer"></span><button class="cancel-button" id="cancel-dialog" type="button">Cancel</button><button class="save-button" type="submit"><span id="save-button-label">Save fixture</span><b>→</b></button></div>
+    </form>
+  </dialog>
+</body>
+</html>

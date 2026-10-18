@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f8fb">
+  <meta name="description" content="An interactive global sales performance dashboard with a 1,000-order sample dataset.">
+  <title>Northstar — Global performance</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="data.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="dashboard-shell">
+    <aside class="sidebar">
+      <a class="brand" href="./" aria-label="Northstar dashboard home">
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><path d="M16 3.5 18.7 13l9.8 3-9.8 2.8L16 28l-2.8-9.2L3 16l10.2-3L16 3.5Z" fill="currentColor"/><circle cx="16" cy="16" r="2.5" fill="#fff"/></svg></span>
+        <span><strong>northstar</strong><small>BUSINESS INTELLIGENCE</small></span>
+      </a>
+      <div class="side-caption">WORKSPACE</div>
+      <nav class="side-nav" aria-label="Dashboard sections">
+        <a class="nav-item is-active" href="#overview"><span class="nav-icon">▦</span>Overview</a>
+        <a class="nav-item" href="#geography"><span class="nav-icon">◎</span>Geography<span class="nav-count">20</span></a>
+        <a class="nav-item" href="#products"><span class="nav-icon">◈</span>Products</a>
+        <a class="nav-item" href="#channels"><span class="nav-icon">⌁</span>Channels</a>
+      </nav>
+      <div class="sidebar-spacer"></div>
+      <div class="sample-card">
+        <span class="sample-sparkle" aria-hidden="true">✦</span>
+        <strong>Demo workspace</strong>
+        <span>Explore 1,000 sample orders from across the globe.</span>
+        <span class="sample-live"><i></i> DATASET READY</span>
+      </div>
+      <div class="profile">
+        <span class="avatar">NS</span>
+        <span><strong>Northstar Group</strong><small>Global organization</small></span>
+        <span class="profile-more" aria-hidden="true">•••</span>
+      </div>
+    </aside>
+
+    <main class="main-content" id="overview">
+      <header class="topbar">
+        <div class="breadcrumbs"><span>Workspace</span><span class="crumb-slash">/</span><strong>Sales overview</strong></div>
+        <div class="topbar-actions">
+          <span class="updated"><i></i> Updated just now</span>
+          <button class="icon-button" type="button" aria-label="Notifications">♧<b></b></button>
+          <span class="top-avatar">NS</span>
+        </div>
+      </header>
+
+      <section class="page-heading">
+        <div>
+          <div class="eyebrow"><span class="eyebrow-dot"></span> <span id="report-date"></span> <span class="eyebrow-separator">·</span> GLOBAL REPORT</div>
+          <h1>Good morning, team <span class="wave" aria-hidden="true">✦</span></h1>
+          <p>Here’s how your business is moving around the world.</p>
+        </div>
+        <div class="filter-bar">
+          <label class="filter-select"><span class="sr-only">Reporting period</span><span aria-hidden="true">◷</span>
+            <select id="period-filter">
+              <option value="365">Last 12 months</option>
+              <option value="90">Last 90 days</option>
+              <option value="30">Last 30 days</option>
+            </select><span class="select-chevron">⌄</span>
+          </label>
+          <label class="filter-select"><span class="sr-only">Region</span><span aria-hidden="true">⌖</span>
+            <select id="region-filter"><option value="all">All regions</option></select><span class="select-chevron">⌄</span>
+          </label>
+          <button class="export-button" id="reset-filters" type="button"><span aria-hidden="true">↺</span> Reset</button>
+        </div>
+      </section>
+
+      <section class="kpi-grid" aria-label="Key performance indicators">
+        <article class="kpi-card">
+          <div class="kpi-top"><span>NET SALES</span><span class="kpi-icon sales-icon">↗</span></div>
+          <div class="kpi-value" id="kpi-sales">$—</div>
+          <div class="kpi-foot"><span class="trend-chip positive" id="sales-trend">↑ 12.8%</span><span>vs. previous period</span><span class="sparkline" id="sales-spark"></span></div>
+        </article>
+        <article class="kpi-card">
+          <div class="kpi-top"><span>ORDERS</span><span class="kpi-icon orders-icon">▤</span></div>
+          <div class="kpi-value" id="kpi-orders">—</div>
+          <div class="kpi-foot"><span class="trend-chip positive" id="orders-trend">↑ 8.2%</span><span>vs. previous period</span><span class="sparkline" id="orders-spark"></span></div>
+        </article>
+        <article class="kpi-card">
+          <div class="kpi-top"><span>GROSS MARGIN</span><span class="kpi-icon margin-icon">◌</span></div>
+          <div class="kpi-value" id="kpi-margin">—<small>%</small></div>
+          <div class="kpi-foot"><span class="trend-chip positive" id="margin-trend">↑ 2.4 pts</span><span>vs. previous period</span><span class="sparkline" id="margin-spark"></span></div>
+        </article>
+        <article class="kpi-card">
+          <div class="kpi-top"><span>AVG. ORDER VALUE</span><span class="kpi-icon aov-icon">◇</span></div>
+          <div class="kpi-value" id="kpi-aov">$—</div>
+          <div class="kpi-foot"><span class="trend-chip positive" id="aov-trend">↑ 4.1%</span><span>vs. previous period</span><span class="sparkline" id="aov-spark"></span></div>
+        </article>
+      </section>
+
+      <section class="content-grid">
+        <article class="panel sales-panel">
+          <div class="panel-heading">
+            <div><span class="section-kicker">PERFORMANCE</span><h2>Sales over time</h2></div>
+            <div class="chart-legend"><i></i> Net sales <span class="chart-unit">USD</span></div>
+          </div>
+          <div class="chart-wrap"><svg id="sales-chart" viewBox="0 0 780 250" role="img" aria-label="Monthly sales trend"><defs><linearGradient id="sales-gradient" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#667ff0" stop-opacity=".19"/><stop offset="1" stop-color="#667ff0" stop-opacity="0"/></linearGradient></defs></svg></div>
+          <div class="chart-foot"><span id="sales-period-label">Monthly performance · all available data</span><span class="foot-insight"><b>✦</b> <span id="sales-insight">Sales are trending up</span></span></div>
+        </article>
+
+        <article class="panel category-panel" id="products">
+          <div class="panel-heading">
+            <div><span class="section-kicker">PRODUCT MIX</span><h2>Sales by category</h2></div>
+            <button class="text-button" id="clear-category" type="button" hidden>Clear filter</button>
+          </div>
+          <div class="category-content">
+            <div class="donut-wrap"><svg id="category-donut" viewBox="0 0 180 180" role="img" aria-label="Sales share by product category"></svg></div>
+            <div class="category-legend" id="category-legend"></div>
+          </div>
+          <div class="category-hint">Select a category to filter the dashboard</div>
+        </article>
+      </section>
+
+      <section class="content-grid map-grid">
+        <article class="panel map-panel" id="geography">
+          <div class="panel-heading map-heading">
+            <div><span class="section-kicker">GLOBAL REACH</span><h2>Sales by location</h2></div>
+            <div class="map-key"><span><i class="map-key-dot small"></i> Lower</span><span><i class="map-key-dot large"></i> Higher</span></div>
+          </div>
+          <div class="map-wrap">
+            <svg id="world-map" viewBox="0 0 900 410" role="img" aria-label="Interactive world map showing sales across 20 countries">
+              <image href="world-map.svg" x="0" y="0" width="900" height="410" aria-hidden="true" />
+              <g id="country-markers"></g>
+            </svg>
+            <div class="map-tooltip" id="map-tooltip" hidden></div>
+          </div>
+          <div class="map-footer"><span id="map-summary">20 countries · select a marker to explore</span><span class="map-source">Boundaries: Natural Earth</span><button class="text-button" id="clear-country" type="button" hidden>Clear country</button></div>
+        </article>
+
+        <article class="panel channel-panel" id="channels">
+          <div class="panel-heading">
+            <div><span class="section-kicker">HOW CUSTOMERS BUY</span><h2>Channel performance</h2></div>
+            <span class="mini-period">BY NET SALES</span>
+          </div>
+          <div class="channel-list" id="channel-list"></div>
+          <div class="customer-card">
+            <div class="customer-head"><span class="section-kicker">CUSTOMER MIX</span><span class="mini-period">ORDERS</span></div>
+            <div id="customer-list" class="customer-list"></div>
+          </div>
+        </article>
+      </section>
+
+      <section class="panel countries-panel">
+        <div class="panel-heading countries-heading">
+          <div><span class="section-kicker">REGIONAL BREAKDOWN</span><h2>Top markets</h2></div>
+          <button class="text-button" id="clear-map-filter" type="button" hidden>Clear map selection</button>
+        </div>
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>COUNTRY</th><th>REGION</th><th>ORDERS</th><th>NET SALES</th><th>SALES SHARE</th></tr></thead>
+            <tbody id="country-table"></tbody>
+          </table>
+        </div>
+        <div class="table-footer"><span id="table-summary">Showing top markets</span><span>Sample dataset · 1,000 orders</span></div>
+      </section>
+
+      <footer class="page-footer"><span>Northstar global sales intelligence</span><span>Illustrative sample data <i>·</i> all values shown in USD</span></footer>
+    </main>
+  </div>
+</body>
+</html>
