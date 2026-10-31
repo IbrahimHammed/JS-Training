@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- The employee directory uses the same shared data and page-aware app. -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1518">
+  <meta name="description" content="Browse staff members, roles, and vehicle allocations in the Nigeria fleet.">
+  <title>Staff directory — Wayfinder</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="data.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body data-page="staff">
+  <div class="app-shell">
+    <!-- Identical navigation across pages makes the small app feel like one tool. -->
+    <aside class="sidebar">
+      <a class="brand" href="index.html" aria-label="Wayfinder fleet home">
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 34 34" fill="none"><path d="M17 3 21 13l10 4-10 4-4 10-4-10-10-4 10-4 4-10Z" fill="currentColor"/><circle cx="17" cy="17" r="3" fill="#0b1518"/></svg></span>
+        <span><strong>wayfinder</strong><small>FLEET OPERATIONS</small></span>
+      </a>
+      <div class="nav-caption">CONTROL ROOM</div>
+      <nav class="side-nav" aria-label="Fleet sections">
+        <a class="nav-link" href="index.html"><span>◫</span>Live overview</a>
+        <a class="nav-link" href="fleet.html"><span>▤</span>Fleet register</a>
+        <a class="nav-link" href="index.html#alerts"><span>◉</span>Route alerts</a>
+        <a class="nav-link active" href="staff.html" aria-current="page"><span>♙</span>Staff directory</a>
+      </nav>
+      <div class="sidebar-spacer"></div>
+      <div class="hq-card"><span class="hq-pulse"></span><small>FLEET HEADQUARTERS</small><strong>Lagos, Nigeria</strong><span class="hq-coordinate">6.5244° N &nbsp; 3.3792° E</span></div>
+      <div class="sidebar-user"><span class="user-avatar">AD</span><span><strong>Fleet admin</strong><small>Operations manager</small></span><i>···</i></div>
+    </aside>
+    <main class="main-content">
+      <!-- Use the breadcrumb for a quick return to live fleet monitoring. -->
+      <header class="topbar"><div class="breadcrumbs"><a href="index.html">Operations</a><span>/</span>Nigeria<strong>/ Staff directory</strong></div><div class="topbar-tools"><span class="system-status"><i></i> SIMULATION LIVE</span><span class="top-date" id="current-time">--:--:-- WAT</span><span class="top-avatar">AD</span></div></header>
+      <section class="page-heading">
+        <div><div class="eyebrow"><span></span> PEOPLE & ASSIGNMENTS <i>·</i> NIGERIA TEAM</div><h1>Meet the people <span>on the move.</span></h1><p>Find your colleagues and see which vehicles are in their care.</p></div>
+        <div class="heading-actions"><a class="button button-outline" href="fleet.html"><span>▤</span> Fleet register</a><button class="button button-primary" id="register-staff" type="button"><span>＋</span> Add a teammate</button></div>
+      </section>
+      <!-- Reciprocal page card links staff records back to the assigned assets. -->
+      <a class="page-hop page-hop-staff" href="fleet.html"><span class="shortcut-icon shortcut-icon-small">▤</span><span><strong>Looking for a vehicle or delivery route?</strong><small>Browse the fleet register to see assets, assignments, and route status.</small></span><i>Visit the fleet&nbsp; ↗</i></a>
+      <!-- Directory table is rendered and searchable from app.js. -->
+      <section class="panel staff-directory-panel staff-page-panel">
+        <div class="panel-heading staff-directory-heading">
+          <div><span class="section-label"><i class="green-pip"></i> PEOPLE & ASSIGNMENTS</span><h2>Staff directory <span id="staff-total-label">100 staff</span></h2></div>
+          <div class="staff-directory-tools"><label class="search-box"><span>⌕</span><input id="staff-search" type="search" placeholder="Search name, role, or vehicle" aria-label="Search staff directory"></label><button class="button button-primary" id="directory-add-staff" type="button"><span>＋</span> Add staff</button></div>
+        </div>
+        <div class="staff-directory-wrap"><table class="staff-directory-table"><thead><tr><th>STAFF MEMBER</th><th>ROLE</th><th>PHONE</th><th>ASSIGNED VEHICLES</th></tr></thead><tbody id="staff-directory-body"></tbody></table></div>
+        <div class="fleet-footer"><span id="staff-showing">Showing 100 staff members</span></div>
+      </section>
+      <footer class="page-footer"><span>WAYFINDER <i>·</i> STAFF DIRECTORY</span><span><a href="index.html">Back to live overview</a><i>·</i> Demo data is saved in this browser.</span></footer>
+    </main>
+  </div>
+  <!-- Keep employee registration separate from the browsable directory. -->
+  <dialog class="form-dialog" id="staff-dialog" aria-labelledby="staff-dialog-title">
+    <form id="staff-form">
+      <div class="dialog-heading"><div><span class="section-label"><i></i> STAFF DIRECTORY</span><h2 id="staff-dialog-title">Register staff member</h2></div><button class="dialog-close" type="button" data-close-dialog aria-label="Close">×</button></div>
+      <div class="form-grid"><label class="full-field">Full name<input id="staff-name" maxlength="60" placeholder="Enter staff member's name" required></label><label>Role<select id="staff-role"><option>Delivery associate</option><option>Sales representative</option><option>Field supervisor</option></select></label><label>Phone (optional)<input id="staff-phone" maxlength="20" type="tel" placeholder="+234 …"></label></div>
+      <p class="form-error" id="staff-error" role="alert" hidden></p>
+      <div class="dialog-actions"><button class="button button-outline" type="button" data-close-dialog>Cancel</button><button class="button button-primary" type="submit">Add staff member <span>→</span></button></div>
+    </form>
+  </dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- Each management surface loads the shared sample data and page-aware app. -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1518">
+  <meta name="description" content="A simulated Nigeria fleet tracking and dispatch dashboard for logistics operations.">
+  <title>Wayfinder — Nigeria fleet operations</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="data.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body data-page="overview">
+  <div class="app-shell">
+    <!-- The sidebar links to three separate pages while keeping HQ context visible. -->
+    <aside class="sidebar">
+      <a class="brand" href="#overview" aria-label="Wayfinder fleet home">
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 34 34" fill="none"><path d="M17 3 21 13l10 4-10 4-4 10-4-10-10-4 10-4 4-10Z" fill="currentColor"/><circle cx="17" cy="17" r="3" fill="#0b1518"/></svg></span>
+        <span><strong>wayfinder</strong><small>FLEET OPERATIONS</small></span>
+      </a>
+      <div class="nav-caption">CONTROL ROOM</div>
+      <nav class="side-nav" aria-label="Fleet sections">
+        <a class="nav-link active" href="#overview"><span>◫</span>Live overview</a>
+        <a class="nav-link" href="fleet.html"><span>▤</span>Fleet register</a>
+        <a class="nav-link" href="#alerts"><span>◉</span>Route alerts <b class="alert-nav-count" id="nav-alert-count">0</b></a>
+        <a class="nav-link" href="staff.html"><span>♙</span>Staff directory</a>
+      </nav>
+      <div class="sidebar-spacer"></div>
+      <div class="hq-card">
+        <span class="hq-pulse"></span><small>FLEET HEADQUARTERS</small><strong>Lagos, Nigeria</strong>
+        <span class="hq-coordinate">6.5244° N &nbsp; 3.3792° E</span>
+      </div>
+      <div class="sidebar-user"><span class="user-avatar">AD</span><span><strong>Fleet admin</strong><small>Operations manager</small></span><i>···</i></div>
+    </aside>
+
+    <main class="main-content" id="overview">
+      <!-- Shared top bar keeps the simulated clock and operating state consistent. -->
+      <header class="topbar">
+        <div class="breadcrumbs">Operations <span>/</span> Nigeria <strong>/ Live fleet</strong></div>
+        <div class="topbar-tools"><span class="system-status"><i></i> SIMULATION LIVE</span><span class="top-date" id="current-time">--:--:-- WAT</span><span class="top-avatar">AD</span></div>
+      </header>
+
+      <section class="page-heading">
+        <div><div class="eyebrow"><span></span> NIGERIA OPERATIONS <i>·</i> LIVE COMMAND</div><h1>Every journey, <span>in view.</span></h1><p>Track your team from Lagos to every corner of the country.</p></div>
+        <div class="heading-actions"><a class="button button-outline" href="staff.html"><span>♙</span> Staff directory</a><a class="button button-primary" href="fleet.html"><span>＋</span> Fleet register</a></div>
+      </section>
+      <!-- Friendly cards are the primary shortcuts to the dedicated registers. -->
+      <nav class="page-shortcuts" aria-label="Fleet management pages">
+        <a class="shortcut-card shortcut-fleet" href="fleet.html"><span class="shortcut-icon">▤</span><span><strong>Fleet register</strong><small>Vehicles, assignments & routes</small></span><i>↗</i></a>
+        <a class="shortcut-card shortcut-staff" href="staff.html"><span class="shortcut-icon">♙</span><span><strong>Staff directory</strong><small>People, roles & allocations</small></span><i>↗</i></a>
+      </nav>
+
+      <!-- These totals are refreshed from the same in-memory data as the map. -->
+      <section class="metrics-grid" aria-label="Fleet status summary">
+        <article class="metric-card"><span class="metric-symbol symbol-green">↗</span><span class="metric-label">VEHICLES ON THE MOVE</span><strong id="metric-active">100</strong><small>Across Nigeria right now</small><div class="metric-accent accent-green"></div></article>
+        <article class="metric-card"><span class="metric-symbol symbol-amber">◷</span><span class="metric-label">DELIVERIES IN PROGRESS</span><strong id="metric-deliveries">100</strong><small>Assigned to a destination</small><div class="metric-accent accent-amber"></div></article>
+        <article class="metric-card alert-metric"><span class="metric-symbol symbol-red">!</span><span class="metric-label">OFF-ROUTE ALERTS</span><strong id="metric-alerts">0</strong><small id="metric-alert-note">All units on assigned routes</small><div class="metric-accent accent-red"></div></article>
+        <article class="metric-card"><span class="metric-symbol symbol-blue">⌖</span><span class="metric-label">COVERAGE</span><strong><span id="metric-cities">0</span><small class="metric-suffix">CITIES</small></strong><small>Connected to Lagos HQ</small><div class="metric-accent accent-blue"></div></article>
+      </section>
+
+      <!-- The map is drawn by app.js into these SVG layers; the bundled outline
+           underneath means the Nigeria map works without an external map API. -->
+      <section class="content-grid">
+        <article class="panel map-panel">
+          <div class="panel-heading map-panel-heading">
+            <div><span class="section-label"><i></i> LIVE GPS SIMULATION</span><h2>Nigeria fleet map</h2></div>
+            <div class="map-heading-right"><span class="map-location"><i>⌖</i> NIGERIA</span><button class="icon-action" id="center-map" type="button" aria-label="Center Nigeria map" title="Center map">⌖</button></div>
+          </div>
+          <div class="map-stage">
+            <svg id="fleet-map" viewBox="0 0 1000 800" role="img" aria-label="Animated Nigeria map showing vehicle locations and routes from Lagos headquarters">
+              <defs>
+                <pattern id="map-grid" width="50" height="50" patternUnits="userSpaceOnUse"><path d="M50 0H0V50" fill="none" stroke="#284046" stroke-width=".7" opacity=".56"/></pattern>
+                <filter id="route-glow" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+              </defs>
+              <rect class="map-background" width="1000" height="800"/>
+              <rect width="1000" height="800" fill="url(#map-grid)" opacity=".74"/>
+              <g class="map-graticule" aria-hidden="true"><path d="M80 200H920M80 400H920M80 600H920M250 80V720M500 80V720M750 80V720"/></g>
+              <image href="nigeria-outline.svg" x="85" y="34" width="830" height="700" aria-hidden="true"/>
+              <g id="route-layer"></g>
+              <g id="city-layer"></g>
+              <g id="vehicle-layer"></g>
+              <g id="hq-layer"></g>
+            </svg>
+            <div class="map-zoom-controls"><button id="zoom-in" type="button" aria-label="Zoom in">＋</button><button id="zoom-out" type="button" aria-label="Zoom out">−</button></div>
+            <div class="map-scale"><span></span><small>200 km</small></div>
+            <div class="map-legend"><span><i class="legend-dot green"></i> Car</span><span><i class="legend-dot amber"></i> Bike</span><span><i class="legend-dot blue"></i> Truck</span><span><i class="legend-dot red"></i> Route alert</span></div>
+            <div class="map-tooltip" id="map-tooltip" hidden></div>
+          </div>
+          <div class="map-footer"><span><i class="footer-live"></i><b id="map-live-count">100</b> assets reporting</span><span>HQ Lagos <i>→</i> Assigned destinations</span><span id="last-update">Updated just now</span></div>
+        </article>
+
+        <!-- Route deviations and recent sample activity live beside the map. -->
+        <aside class="panel dispatch-panel" id="alerts">
+          <div class="panel-heading dispatch-heading"><div><span class="section-label"><i class="amber-pip"></i> NEEDS ATTENTION</span><h2>Route alerts <span class="alert-count" id="alert-count">0</span></h2></div><button class="text-button" id="clear-alert-filter" type="button" hidden>Clear</button></div>
+          <div class="alert-summary"><span class="alert-icon">!</span><span><strong id="alert-summary-title">All clear</strong><small id="alert-summary-copy">No vehicles have left their assigned routes.</small></span></div>
+          <div class="alert-list" id="alert-list"></div>
+          <div class="dispatch-divider"></div>
+          <div class="dispatch-subhead"><div><span class="section-label"><i class="green-pip"></i> ON THE MOVE</span><h3>Latest activity</h3></div><button class="text-button" id="show-all-vehicles" type="button">View fleet →</button></div>
+          <div class="activity-list" id="activity-list"></div>
+        </aside>
+      </section>
+
+      <footer class="page-footer"><span>WAYFINDER <i>·</i> NIGERIA FLEET OPERATIONS</span><span>Demo only <i>·</i> Vehicle locations are simulated, not live GPS.</span></footer>
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- The fleet page reuses the shared CSS, seed catalog, and page-aware app. -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1518">
+  <meta name="description" content="Manage vehicles, staff allocations, and delivery routes for the Nigeria fleet.">
+  <title>Fleet register — Wayfinder</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="data.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body data-page="fleet">
+  <div class="app-shell">
+    <!-- Keep navigation and HQ information consistent across all three pages. -->
+    <aside class="sidebar">
+      <a class="brand" href="index.html" aria-label="Wayfinder fleet home">
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 34 34" fill="none"><path d="M17 3 21 13l10 4-10 4-4 10-4-10-10-4 10-4 4-10Z" fill="currentColor"/><circle cx="17" cy="17" r="3" fill="#0b1518"/></svg></span>
+        <span><strong>wayfinder</strong><small>FLEET OPERATIONS</small></span>
+      </a>
+      <div class="nav-caption">CONTROL ROOM</div>
+      <nav class="side-nav" aria-label="Fleet sections">
+        <a class="nav-link" href="index.html"><span>◫</span>Live overview</a>
+        <a class="nav-link active" href="fleet.html" aria-current="page"><span>▤</span>Fleet register</a>
+        <a class="nav-link" href="index.html#alerts"><span>◉</span>Route alerts</a>
+        <a class="nav-link" href="staff.html"><span>♙</span>Staff directory</a>
+      </nav>
+      <div class="sidebar-spacer"></div>
+      <div class="hq-card"><span class="hq-pulse"></span><small>FLEET HEADQUARTERS</small><strong>Lagos, Nigeria</strong><span class="hq-coordinate">6.5244° N &nbsp; 3.3792° E</span></div>
+      <div class="sidebar-user"><span class="user-avatar">AD</span><span><strong>Fleet admin</strong><small>Operations manager</small></span><i>···</i></div>
+    </aside>
+    <main class="main-content">
+      <!-- Page breadcrumb provides a direct route back to the live overview. -->
+      <header class="topbar"><div class="breadcrumbs"><a href="index.html">Operations</a><span>/</span>Nigeria<strong>/ Fleet register</strong></div><div class="topbar-tools"><span class="system-status"><i></i> SIMULATION LIVE</span><span class="top-date" id="current-time">--:--:-- WAT</span><span class="top-avatar">AD</span></div></header>
+      <section class="page-heading">
+        <div><div class="eyebrow"><span></span> ASSET MANAGEMENT <i>·</i> NIGERIA FLEET</div><h1>Your fleet, <span>well looked after.</span></h1><p>Keep every vehicle, assignment, and destination organised in one place.</p></div>
+        <div class="heading-actions"><a class="button button-outline" href="staff.html"><span>♙</span> Meet the team</a><button class="button button-primary" id="register-vehicle" type="button"><span>＋</span> Add a vehicle</button></div>
+      </section>
+      <!-- Reciprocal page card makes it easy to move from vehicle to employee records. -->
+      <a class="page-hop" href="staff.html"><span class="shortcut-icon shortcut-icon-small">♙</span><span><strong>Need the people behind the journeys?</strong><small>Visit the staff directory to see each team member and their assigned vehicle.</small></span><i>Meet the team&nbsp; ↗</i></a>
+      <!-- Search and filters act on the paginated, live fleet dataset. -->
+      <section class="panel fleet-panel fleet-page-panel">
+        <div class="panel-heading fleet-heading">
+          <div><span class="section-label"><i class="green-pip"></i> ASSET MANAGEMENT</span><h2>Fleet register <span id="fleet-total-label">100 units</span></h2></div>
+          <div class="fleet-tools">
+            <label class="search-box"><span>⌕</span><input id="fleet-search" type="search" placeholder="Search vehicle, staff, city" aria-label="Search fleet"></label>
+            <label class="filter-box"><span class="sr-only">Filter by vehicle type</span><select id="type-filter"><option value="all">All vehicle types</option><option value="car">Cars</option><option value="bike">Bikes</option><option value="truck">Trucks</option></select></label>
+            <label class="filter-box"><span class="sr-only">Filter by route status</span><select id="route-filter"><option value="all">All statuses</option><option value="on-route">On route</option><option value="off-route">Off route</option></select></label>
+          </div>
+        </div>
+        <div class="fleet-table-wrap"><table class="fleet-table"><thead><tr><th>ASSET</th><th>ASSIGNED STAFF</th><th>DESTINATION</th><th>ROUTE PROGRESS</th><th>STATUS</th><th></th></tr></thead><tbody id="fleet-table-body"></tbody></table></div>
+        <div class="fleet-footer"><span id="fleet-showing">Showing 1–8 of 100 units</span><div class="pagination"><button id="fleet-prev" type="button" aria-label="Previous fleet page" disabled>←</button><span id="fleet-page">1 / 13</span><button id="fleet-next" type="button" aria-label="Next fleet page">→</button></div></div>
+      </section>
+      <footer class="page-footer"><span>WAYFINDER <i>·</i> FLEET REGISTER</span><span><a href="index.html">Back to live overview</a><i>·</i> Demo data is saved in this browser.</span></footer>
+    </main>
+  </div>
+  <!-- One dialog supports both new vehicle registration and existing allocation edits. -->
+  <dialog class="form-dialog" id="vehicle-dialog" aria-labelledby="vehicle-dialog-title">
+    <form id="vehicle-form">
+      <input type="hidden" id="vehicle-id">
+      <div class="dialog-heading"><div><span class="section-label"><i></i> FLEET REGISTER</span><h2 id="vehicle-dialog-title">Register a vehicle</h2></div><button class="dialog-close" type="button" data-close-dialog aria-label="Close">×</button></div>
+      <div class="form-grid">
+        <label>Vehicle type<select id="vehicle-type" required><option value="car">Car</option><option value="bike">Motorcycle</option><option value="truck">Truck</option></select></label>
+        <label>Registration / asset ID<input id="vehicle-registration" maxlength="24" placeholder="e.g. LAG-204" required></label>
+        <label>Staff member<select id="vehicle-staff" required></select></label>
+        <label>Assigned destination<select id="vehicle-destination" required></select></label>
+        <label class="full-field">Vehicle / assignment note<input id="vehicle-note" maxlength="60" placeholder="Optional delivery or sales run"></label>
+      </div>
+      <p class="form-error" id="vehicle-error" role="alert" hidden></p>
+      <div class="dialog-actions"><button class="button button-outline" type="button" data-close-dialog>Cancel</button><button class="button button-primary" type="submit"><span id="vehicle-save-label">Register & assign</span><span>→</span></button></div>
+    </form>
+  </dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>

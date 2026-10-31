@@ -1,0 +1,9 @@
+<!--
+  Offline Nigeria silhouette derived from Natural Earth 1:110m country data
+  (public domain): https://www.naturalearthdata.com/
+  The simplified path is normalized to this 900 x 760 viewBox. index.html
+  scales it into the same map rectangle used by app.js's coordinate projection.
+  The land gradient and outline colors are presentational; route and city
+  overlays are created separately by the application.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 760"><defs><linearGradient id="land" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#163b42"/><stop offset="1" stop-color="#102d34"/></linearGradient></defs><path d="M13.8 588.3 L17.9 465.8 L16.1 417.5 L29.7 369.5 L51.9 346.2 L86.8 299.2 L79.2 278.8 L93.4 248.2 L77.2 203.1 L80.0 177.8 L85.0 110.0 L105.6 79.3 L115.8 35.6 L134.5 19.2 L211.9 10.2 L284.1 38.5 L311.1 67.3 L347.8 68.5 L381.9 49.9 L469.1 89.2 L505.8 87.3 L548.3 54.9 L590.5 57.2 L611.3 46.6 L650.0 51.0 L705.7 73.2 L762.0 30.7 L778.9 33.7 L827.7 116.9 L841.1 115.2 L869.6 145.5 L861.7 159.2 L857.9 184.5 L797.3 243.3 L778.2 291.8 L768.1 331.3 L752.8 348.2 L738.3 401.5 L699.8 432.8 L688.6 471.2 L672.4 501.8 L665.7 533.4 L616.2 559.0 L575.8 527.8 L548.5 529.1 L505.6 573.5 L484.8 574.2 L450.5 647.5 L432.0 701.3 L357.3 728.7 L329.9 724.7 L302.3 741.7 L244.7 740.1 L206.1 692.5 L182.4 637.5 L131.4 587.4 L77.3 588.4 L13.8 588.3Z" fill="url(#land)" stroke="#5d8581" stroke-width="2.5" stroke-linejoin="round"/></svg>
