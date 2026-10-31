@@ -82,6 +82,25 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 3px s
 .league-table th { height: 30px; color: #99a49b; font-size: 7px; font-weight: 700; letter-spacing: .5px; }
 .league-table td { height: 33px; border-top: 1px solid #f0f2f0; color: #707e74; font-size: 9px; }
 .league-table tr.top-four-cut > td { border-bottom: 2px solid #4b9c74; }
+.league-table tr.relegation-cut > td { border-top: 2px solid #dc5b56; }
+.league-table tr.zone-champions > td { animation: champions-flash 3.6s ease-in-out infinite; }
+.league-table tr.zone-champions:nth-child(2) > td { animation-delay: .35s; }
+.league-table tr.zone-champions:nth-child(3) > td { animation-delay: .7s; }
+.league-table tr.zone-champions:nth-child(4) > td { animation-delay: 1.05s; }
+.league-table tr.champion-leader > td { background: #fff8e6; color: #604713; }
+.league-table tr.champion-leader > td { animation-name: champions-leader-flash; }
+.league-table tr.champion-leader .position-cell { color: #a87516 !important; font-weight: 800; }
+.league-table tr.champion-leader .points-cell { color: #77540d; }
+.league-table tr.champion-leader .team-cell { color: #604713; }
+.champion-tag { display: inline-flex; align-items: center; gap: 3px; margin-left: 4px; padding: 3px 5px; border: 1px solid #efd99c; border-radius: 4px; background: #fff0c7; color: #916510; font-size: 6px; font-weight: 800; letter-spacing: .45px; }
+@keyframes champions-flash {
+  0%, 100% { background-color: #fff; }
+  50% { background-color: #eff8f1; }
+}
+@keyframes champions-leader-flash {
+  0%, 100% { background-color: #fff8e6; }
+  50% { background-color: #ffedbd; }
+}
 .league-table th:first-child,.league-table td:first-child { width: 37px; }
 .league-table th.club-col { min-width: 135px; text-align: left; }.league-table td:nth-child(2) { text-align: left; }
 .league-table th.points-col,.league-table td.points-cell { color: #223b2e; font-weight: 800; }

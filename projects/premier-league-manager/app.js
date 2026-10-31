@@ -318,6 +318,8 @@ function renderStandings(standings) {
     const row = document.createElement("tr");
     row.className = index < 4 ? "zone-champions" : index >= 17 ? "zone-relegation" : "";
     if (index === 3) row.classList.add("top-four-cut");
+    if (index === 17) row.classList.add("relegation-cut");
+    if (index === 0) row.classList.add("champion-leader");
     const position = document.createElement("td");
     position.className = "position-cell";
     position.textContent = String(index + 1).padStart(2, "0");
@@ -329,6 +331,12 @@ function renderStandings(standings) {
     const teamName = document.createElement("span");
     teamName.textContent = team.name;
     clubLabel.append(teamName);
+    if (index === 0) {
+      const leaderBadge = document.createElement("span");
+      leaderBadge.className = "champion-tag";
+      leaderBadge.textContent = "♛ CHAMPIONS";
+      clubLabel.append(leaderBadge);
+    }
     club.append(clubLabel);
 
     row.append(position, club);
